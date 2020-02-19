@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +10,74 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+} */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+        "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --primary-color: #007bff;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.cursor-point {
+    cursor: pointer;
+}
+
+.fz-14 {
+    font-size: 14px;
+}
+
+img {
+    width: 100%;
+}
+
+.flex-grow-2 {
+    flex-grow: 2 !important;
+}
+
+.flex-basic-25 {
+    flex-basis: 25%;
+}
+
+ul {
+    margin: 0 !important;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+.wp-nor {
+    white-space: nowrap;
+}
+
+hr {
+    border-top-color: #fff !important;
+}
+
+.ant-pagination-item-link {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }

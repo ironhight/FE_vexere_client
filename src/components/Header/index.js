@@ -85,22 +85,22 @@ class Header extends PureComponent {
 
     return (
       <HeaderContainer>
-        <Navbar expand="md">
+        <Navbar expand="md" className="container">
           <Link to="/" className="px-0 py-0 mr-0">
             <img className="logo" src={Logo} alt="logo" />
           </Link>
           <Collapse navbar>
             <Nav className="ml-auto align-items-center" navbar>
-              <NavItem className="mr-3">
+              {/* <NavItem className="mr-3">
                 <Link to="/trips/search" className="text-white login-link">
                   Trip
                 </Link>
-              </NavItem>
+              </NavItem> */}
               {!auth.authenticate ? (
                 <>
                   <NavItem className="mr-3">
                     <p
-                      className="login-link text-white cursor-point mb-0"
+                      className="login-link text-dark cursor-point mb-0"
                       onClick={() => this.loginModal(true)}
                     >
                       Login

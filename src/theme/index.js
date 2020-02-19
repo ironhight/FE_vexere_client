@@ -1,5 +1,5 @@
 const theme = {
-  headerColor: "#253241",
+  headerColor: "#FFFFFF",
   primary: "#007bff"
 };
 

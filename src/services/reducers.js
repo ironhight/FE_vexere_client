@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-// import SearchTrips from './SearchTrip/reducer';
+import Authenticate from "./Auth/reducer";
 
 const rootReducers = combineReducers({
-  // SearchTrips,
+  Authenticate
 });
 
 export default rootReducers;

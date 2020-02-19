@@ -15,6 +15,12 @@ import thunk from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import rootReducers from "./services/reducers.js";
+
+import "./index.css";
+import "antd/dist/antd.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
+
 const initialState = {};
 const middlwwares = [thunk];
 
