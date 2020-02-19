@@ -13,7 +13,7 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 // import CreateTrip from "./CreateTrip";
 
-import { authLogout } from "../../services/Auth/actions.js";
+import { authLogout } from "../../redux/actions/auth";
 
 class Header extends PureComponent {
   constructor(props) {

@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { DatePickerCustom, InputNumberCustom, ButtonCustom } from "../styled";
+import { DatePickerCustom, ButtonCustom } from "../styled";
 import { Select, Form, Col, Row, Icon } from "antd";
 import { Formik } from "formik";
 import { object, string } from "yup";
 import _ from "lodash";
 import queryString from "query-string";
 import { connect } from "react-redux";
-import { searchTrips } from "../../../services/SearchTrip/actions.js";
-import { getProvinces } from "../../../services/Province/actions.js";
+// import { searchTrips } from "../../../redux/actions/trips";
+import * as stationActions from "../../../redux/actions/stations";
 import { withRouter } from "react-router-dom";
 
 import moment from "moment";
@@ -31,7 +31,7 @@ class BookingForm extends Component {
   };
 
   componentDidMount() {
-    this.props.getProvinces();
+    this.props.getStations();
 
     if (this.props.atHome) return;
 
@@ -55,10 +55,11 @@ class BookingForm extends Component {
     const { atHome, history } = this.props;
     const { locationFrom, locationTo, startTime } = this.state;
 
-    const locations = _.map(this.props.provinces, (item, index) => {
+    const locations = _.map(this.props.stations, (item, index) => {
+      // console.log("TCL: BookingForm -> render -> item.name", item.name);
       return (
-        <Option key={index} value={item.Title}>
-          {item.Title}
+        <Option key={index} value={item._id}>
+          {item.name}
         </Option>
       );
     });
@@ -120,6 +121,7 @@ class BookingForm extends Component {
                     }
                   >
                     {locations}
+                    {/* hahah */}
                   </Select>
                 </FormItem>
               </Col>
@@ -152,7 +154,7 @@ class BookingForm extends Component {
                   </Select>
                 </FormItem>
               </Col>
-              <Col className={atHome && "px-1"} md={atHome ? 4 : 24}>
+              <Col className={atHome && "px-1"} md={atHome ? 6 : 24}>
                 <label
                   className={atHome ? "font-weight-bold text-white mb-0" : ""}
                 >
@@ -237,21 +239,21 @@ class BookingForm extends Component {
 
 const mapStateToProps = state => {
   return {
-    provinces: state.Provinces
+    stations: state.stations
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    searchTrips: payload => {
-      dispatch(searchTrips(payload));
-    },
-    getProvinces: () => {
-      dispatch(getProvinces());
-    }
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     searchTrips: payload => {
+//       dispatch(searchTrips(payload));
+//     },
+//     getProvinces: () => {
+//       dispatch(getProvinces());
+//     }
+//   };
+// };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(BookingForm)
+  connect(mapStateToProps, stationActions)(BookingForm)
 );

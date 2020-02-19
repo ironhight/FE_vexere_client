@@ -6,15 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import { ThemeProvider } from "styled-components";
 
 import theme from "./theme";
-import "./index.css";
-import "antd/dist/antd.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "react-toastify/dist/ReactToastify.css";
 
 import thunk from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
-import rootReducers from "./services/reducers.js";
+import rootReducers from "./redux/reducers";
 
 import "./index.css";
 import "antd/dist/antd.css";

@@ -1,12 +1,12 @@
 import api from "../../api";
 import * as types from "../constants/actionTypes";
 
-export const getProvinces = () => dispatch => {
+export const getStations = () => dispatch => {
   return api
     .get(`/stations`)
     .then(res => {
       dispatch({
-        type: types.GET_PROVINCE,
+        type: types.GET_STATIONS,
         payload: res.data
       });
     })

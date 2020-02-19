@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+// import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import ScrollToTop from "react-router-scroll-top";
