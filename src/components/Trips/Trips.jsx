@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Section } from "./styled";
-// import TripItem from "./TripItem";
+import TripItem from "./TripItem/TripItem";
 import { Button, Skeleton } from "antd";
 import { connect } from "react-redux";
 
@@ -43,15 +43,15 @@ class Trips extends PureComponent {
     console.log(data);
     return (
       <Section>
-        <h2 className="text-center mb-5">Trip Recent</h2>
-        {/* <Skeleton active loading={isLoading}>
+        <h2 className="text-center mb-5">Trip Booking</h2>
+        <Skeleton active loading={isLoading}>
           <TripItem
             userType={user.user.userType}
             trips={data}
             large
             priceFont="30px"
           />
-        </Skeleton> */}
+        </Skeleton>
         {limit < count && (
           <div className="text-center mt-3">
             <Button onClick={this.loadMore} type="dashed" size="large">
