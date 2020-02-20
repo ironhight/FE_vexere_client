@@ -20,9 +20,15 @@ class TripItem extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    this.props.getStations();
+  }
+
   render() {
     const { trips = [], priceFont, large } = this.props;
+    // console.log("TCL: render -> this.props.stations", this.props.stations);
 
+    // console.log("TCL: render -> trips", trips);
     const isEmpty = _.isEmpty(trips);
     return (
       <>
@@ -33,11 +39,43 @@ class TripItem extends PureComponent {
             {_.map(trips, (item, index) => {
               return (
                 <TimelineItem key={index}>
-                  <div className="flex-basic-25">
+                  <div className="flex-basic-50 fz-16">
                     <div className="d-flex align-items-center mb-1">
-                      {item.fromStation}
-                      <FaArrowRight className="mx-2" />
-                      {item.toStation}
+                      {
+                        this.props.stations.find(
+                          elm => elm._id === item.fromStation
+                        ).name
+                      }
+                      {`, `}
+                      {
+                        this.props.stations.find(
+                          elm => elm._id === item.fromStation
+                        ).address
+                      }
+                      {`, `}
+                      {
+                        this.props.stations.find(
+                          elm => elm._id === item.fromStation
+                        ).province
+                      }
+                      <FaArrowRight className="mx-3" />
+                      {
+                        this.props.stations.find(
+                          elm => elm._id === item.toStation
+                        ).name
+                      }
+                      {`, `}
+                      {
+                        this.props.stations.find(
+                          elm => elm._id === item.toStation
+                        ).address
+                      }
+                      {`, `}
+                      {
+                        this.props.stations.find(
+                          elm => elm._id === item.toStation
+                        ).province
+                      }
                     </div>
                     <div className="d-flex align-items-center">
                       <FaCalendarAlt className="mr-1" />

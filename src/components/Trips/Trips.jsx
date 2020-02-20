@@ -40,7 +40,7 @@ class Trips extends PureComponent {
     const { limit } = this.state;
     const { data, isLoading } = trips;
     let count = totalTrips.length;
-    console.log(data);
+    // console.log(data);
     return (
       <Section>
         <h2 className="text-center mb-5">Trip Booking</h2>
