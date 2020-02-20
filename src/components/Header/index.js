@@ -9,19 +9,18 @@ import { HeaderContainer } from "./styled";
 import { FaUserPlus } from "react-icons/fa";
 
 //core components
-import LoginForm from "./LoginForm";
+import LoginForm from "./LoginForm/LoginForm";
 import RegisterForm from "./RegisterForm";
 // import CreateTrip from "./CreateTrip";
 
-import { authLogout } from "../../redux/actions/auth";
+import { authLogin } from "../../redux/actions/auth";
 
 class Header extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       signInVisible: false,
-      registerVisible: false,
-      createVisible: false
+      registerVisible: false
     };
   }
 
@@ -36,12 +35,6 @@ class Header extends PureComponent {
     this.setState({
       registerVisible: value,
       signInVisible: false
-    });
-  };
-
-  createModal = value => {
-    this.setState({
-      createVisible: value
     });
   };
 
@@ -66,17 +59,17 @@ class Header extends PureComponent {
         <Menu.Item>
           <Link to="/edit-profile">Edit profile</Link>
         </Menu.Item>
-        {auth.user.userType !== "driver" ? (
-          <Menu.Item>
-            <Link to="/history-trips">History trips</Link>
-          </Menu.Item>
-        ) : (
-          <Menu.Item>
-            <Link to="/my-profile">My profile</Link>
-          </Menu.Item>
-        )}
+
         <Menu.Item>
-          <Link to="/" onClick={() => this.props.authLogout()}>
+          <Link to="/history-trips">History trips</Link>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Link to="/my-profile">My profile</Link>
+        </Menu.Item>
+
+        <Menu.Item>
+          <Link to="/" onClick={() => this.props.login()}>
             Logout
           </Link>
         </Menu.Item>
@@ -91,12 +84,7 @@ class Header extends PureComponent {
           </Link>
           <Collapse navbar>
             <Nav className="ml-auto align-items-center" navbar>
-              {/* <NavItem className="mr-3">
-                <Link to="/trips/search" className="text-white login-link">
-                  Trip
-                </Link>
-              </NavItem> */}
-              {!auth.authenticate ? (
+              {!auth.isAuthenticated ? (
                 <>
                   <NavItem className="mr-3">
                     <p
@@ -152,8 +140,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authLogout: () => {
-      dispatch(authLogout());
+    authLogin: () => {
+      dispatch(authLogin());
     }
   };
 };

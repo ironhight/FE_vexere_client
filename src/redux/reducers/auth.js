@@ -1,8 +1,7 @@
+import _ from "lodash";
+import * as types from "../constants/actionTypes";
 import jwtDecode from "jwt-decode";
-// import axios from 'axios';
-
-// import { AUTH_LOGIN, AUTH_LOGOUT } from "./actionTypes";
-import setAuthToken from "../../utils/setAuthToken";
+// import { act } from "react-dom/test-utils";
 
 let initialState = {
   user: {},
@@ -10,7 +9,7 @@ let initialState = {
 };
 
 const user =
-  (localStorage.getItem("token") && jwtDecode(localStorage.getItem("token"))) ||
+  (localStorage.getItem("auth") && jwtDecode(localStorage.getItem("auth"))) ||
   {};
 if (user) {
   if (Date.now() / 1000 <= user.exp) {
@@ -21,27 +20,18 @@ if (user) {
   }
 }
 
-const Authenticate = (state = initialState, action) => {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "AUTH_LOGIN":
-      localStorage.setItem("token", action.payload);
-
+    case types.AUTH_LOGIN:
+      localStorage.setItem("auth", action.payload);
       return {
         user: jwtDecode(action.payload),
         isAuthenticated: true
       };
 
-    case " AUTH_LOGOUT":
-      localStorage.removeItem("token");
-      setAuthToken();
-
-      return {
-        user: {},
-        isAuthenticated: false
-      };
     default:
       return state;
   }
 };
 
-export default Authenticate;
+export default authReducer;

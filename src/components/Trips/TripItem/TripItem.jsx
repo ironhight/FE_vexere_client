@@ -50,12 +50,6 @@ class TripItem extends PureComponent {
                       {
                         this.props.stations.find(
                           elm => elm._id === item.fromStation
-                        ).address
-                      }
-                      {`, `}
-                      {
-                        this.props.stations.find(
-                          elm => elm._id === item.fromStation
                         ).province
                       }
                       <FaArrowRight className="mx-3" />
@@ -63,12 +57,6 @@ class TripItem extends PureComponent {
                         this.props.stations.find(
                           elm => elm._id === item.toStation
                         ).name
-                      }
-                      {`, `}
-                      {
-                        this.props.stations.find(
-                          elm => elm._id === item.toStation
-                        ).address
                       }
                       {`, `}
                       {
@@ -85,7 +73,7 @@ class TripItem extends PureComponent {
 
                   <Price
                     priceFont={priceFont}
-                    className="flex-basic-25 text-center"
+                    className="flex-basic-25 text-left "
                   >
                     {item.price &&
                       item.price
