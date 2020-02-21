@@ -1,7 +1,6 @@
-import _ from "lodash";
 import * as types from "../constants/actionTypes";
 import jwtDecode from "jwt-decode";
-// import { act } from "react-dom/test-utils";
+import setAuthToken from "../../utils/setAuthToken";
 
 let initialState = {
   user: {},
@@ -27,6 +26,14 @@ const authReducer = (state = initialState, action) => {
       return {
         user: jwtDecode(action.payload),
         isAuthenticated: true
+      };
+
+    case types.AUTH_LOGOUT:
+      localStorage.removeItem("auth");
+      setAuthToken();
+      return {
+        user: {},
+        isAuthenticated: false
       };
 
     default:

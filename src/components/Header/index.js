@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { Avatar, Menu, Dropdown, Icon } from "antd";
+import { Avatar, Menu, Dropdown } from "antd";
 
 import Logo from "../../assets/images/logo.svg";
 import { Navbar, Nav, NavItem, Collapse } from "reactstrap";
@@ -10,10 +10,9 @@ import { FaUserPlus } from "react-icons/fa";
 
 //core components
 import LoginForm from "./LoginForm/LoginForm";
-import RegisterForm from "./RegisterForm";
-// import CreateTrip from "./CreateTrip";
+import RegisterForm from "./RegisterForm/RegisterForm";
 
-import { authLogin } from "../../redux/actions/auth";
+import { authLogout } from "../../redux/actions/auth";
 
 class Header extends PureComponent {
   constructor(props) {
@@ -69,7 +68,7 @@ class Header extends PureComponent {
         </Menu.Item>
 
         <Menu.Item>
-          <Link to="/" onClick={() => this.props.login()}>
+          <Link to="/" onClick={() => this.props.authLogout()}>
             Logout
           </Link>
         </Menu.Item>
@@ -140,8 +139,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    authLogin: () => {
-      dispatch(authLogin());
+    authLogout: () => {
+      dispatch(authLogout());
     }
   };
 };

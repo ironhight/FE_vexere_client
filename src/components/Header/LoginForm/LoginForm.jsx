@@ -4,12 +4,11 @@ import { Button, Spin, notification } from "antd";
 import { object, string } from "yup";
 import { withFormik } from "formik";
 import { connect } from "react-redux";
-import { login } from "../../../redux/actions/auth";
 import api from "../../../api";
 import jwtDecode from "jwt-decode";
-import axios from "axios";
 import formInput from "../../../utils/formInput";
 import { authLogin } from "../../../redux/actions/auth";
+import setAuthToken from "../../../utils/setAuthToken";
 
 class LoginForm extends PureComponent {
   render() {
@@ -83,14 +82,13 @@ const withFormikHOC = withFormik({
     { resetForm, setFieldValue, setFieldError, props, setSubmitting }
   ) => {
     setFieldValue("spinning", true);
-    // apiCaller("users/login", "POST", values)
     // console.log("TCL: ...Object.values(values)", );
     api
       .post(`users/login`, values)
       .then(res => {
-        console.log("object");
+        // console.log("TCL: res.data.token", res.data.token);
         setSubmitting(false);
-        axios.defaults.headers.common["token"] = res.data.token;
+        setAuthToken(res.data.token);
         resetForm();
         props.loginModal(false);
         props.authLogin(res.data.token);
@@ -103,7 +101,6 @@ const withFormikHOC = withFormik({
         });
       })
       .catch(err => {
-        console.log("error");
         setSubmitting(false);
         setFieldError("email", err.response.data);
         setFieldError("password", err.response.data);
