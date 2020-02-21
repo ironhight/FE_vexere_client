@@ -1,16 +1,17 @@
 import HomePage from "./pages/HomePage/HomePage";
+import BookingTrip from "./pages/BookingTrip/BookingTrip";
 
 const routesHome = [
   {
     path: "/",
     exact: true,
     component: HomePage
+  },
+  {
+    path: "/booking-trip",
+    exact: false,
+    component: BookingTrip
   }
-  //   {
-  //     path: "/movie",
-  //     exact: false,
-  //     component: Movie
-  //   },
   //   {
   //     path: "/detail-movie/:id",
   //     exact: false,

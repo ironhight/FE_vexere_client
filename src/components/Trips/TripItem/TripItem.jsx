@@ -2,15 +2,12 @@ import React, { PureComponent } from "react";
 import { Empty, Timeline } from "antd";
 import _ from "lodash";
 import { Price, TimelineItem } from "./styled";
-import { Link } from "react-router-dom";
-// import swal from "sweetalert";
-// import swalReact from "@sweetalert/with-react";
-// import apiCaller from "../../../utils/apiCaller";
 import { FaArrowRight, FaCalendarAlt } from "react-icons/fa";
-// import { finishTrip } from "../../../services/HistoryTrip/actions.js";
 import { connect } from "react-redux";
 import moment from "moment";
 import * as stationsActions from "../../../redux/actions/stations";
+import swal from "sweetalert";
+import { withRouter } from "react-router-dom";
 
 class TripItem extends PureComponent {
   constructor(props) {
@@ -24,12 +21,31 @@ class TripItem extends PureComponent {
     this.props.getStations();
   }
 
+  handleBooking = isAuthenticated => {
+    if (!isAuthenticated) {
+      console.log("then");
+      return swal({
+        text: "You have to login for booking trip",
+        icon: "warning",
+        buttons: false,
+        timer: 1500
+      });
+    } else {
+      console.log("haha");
+      this.props.history.push("/booking-trip");
+    }
+  };
+
   render() {
     const { trips = [], priceFont, large } = this.props;
     // console.log("TCL: render -> this.props.stations", this.props.stations);
 
     // console.log("TCL: render -> trips", trips);
     const isEmpty = _.isEmpty(trips);
+    // console.log(
+    //   "TCL: render -> this.props.Authenticate.isAuthenticate",
+    //   this.props.Authenticate.isAuthenticated
+    // );
     return (
       <>
         {isEmpty ? (
@@ -83,13 +99,18 @@ class TripItem extends PureComponent {
                   </Price>
                   <div className="flex-grow-0">
                     <>
-                      <Link
-                        to={`/booking-trip/${item._id}`}
+                      <button
+                        type="button"
                         className={`btn btn-success ${large &&
                           "btn-lg wp-nor"}`}
+                        onClick={() =>
+                          this.handleBooking(
+                            this.props.Authenticate.isAuthenticated
+                          )
+                        }
                       >
                         Book now
-                      </Link>
+                      </button>
                     </>
                   </div>
                 </TimelineItem>
@@ -104,8 +125,9 @@ class TripItem extends PureComponent {
 
 const mapStateToProps = state => {
   return {
-    stations: state.stations
+    stations: state.stations,
+    Authenticate: state.Authenticate
   };
 };
 
-export default connect(mapStateToProps, stationsActions)(TripItem);
+export default withRouter(connect(mapStateToProps, stationsActions)(TripItem));
