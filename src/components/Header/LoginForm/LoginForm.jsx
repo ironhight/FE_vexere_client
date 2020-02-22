@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { ModalCustom } from "../styled";
-import { Button, Spin, notification } from "antd";
+import { Button, Spin } from "antd";
 import { object, string } from "yup";
 import { withFormik } from "formik";
 import { connect } from "react-redux";
@@ -9,6 +9,7 @@ import jwtDecode from "jwt-decode";
 import formInput from "../../../utils/formInput";
 import { authLogin } from "../../../redux/actions/auth";
 import setAuthToken from "../../../utils/setAuthToken";
+import Swal from "sweetalert2";
 
 class LoginForm extends PureComponent {
   render() {
@@ -21,6 +22,7 @@ class LoginForm extends PureComponent {
       handleSubmit,
       isSubmitting
     } = this.props;
+
     return (
       <ModalCustom
         title={<h3 className="modal-title text-center">Login</h3>}
@@ -93,11 +95,22 @@ const withFormikHOC = withFormik({
         props.loginModal(false);
         props.authLogin(res.data.token);
 
-        notification.success({
-          message: "Login successfully",
-          duration: 2.5,
-          description: `Welcome ${jwtDecode(res.data.token).fullName}`,
-          placement: "topLeft"
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-start",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          onOpen: toast => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          }
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully",
+          footer: `Welcome ${jwtDecode(res.data.token).fullName}`
         });
       })
       .catch(err => {

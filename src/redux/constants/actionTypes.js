@@ -7,3 +7,4 @@ export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
 export const GET_TRIPS_LIMIT = "GET_TRIPS_LIMIT";
 export const GET_ALL_TRIPS = "GET_ALL_TRIPS";
+export const GET_DETAIL_TRIP = "GET_DETAIL_TRIP";

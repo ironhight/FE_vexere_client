@@ -6,8 +6,9 @@ import { FaArrowRight, FaCalendarAlt } from "react-icons/fa";
 import { connect } from "react-redux";
 import moment from "moment";
 import * as stationsActions from "../../../redux/actions/stations";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import { withRouter } from "react-router-dom";
+import Swal from "sweetalert2";
 
 class TripItem extends PureComponent {
   constructor(props) {
@@ -21,31 +22,21 @@ class TripItem extends PureComponent {
     this.props.getStations();
   }
 
-  handleBooking = isAuthenticated => {
+  handleBooking = (isAuthenticated, id) => {
     if (!isAuthenticated) {
-      console.log("then");
-      return swal({
-        text: "You have to login for booking trip",
-        icon: "warning",
-        buttons: false,
-        timer: 1500
-      });
+      return Swal.fire(
+        "Warning!",
+        "You have to login for booking trip",
+        "warning"
+      );
     } else {
-      console.log("haha");
-      this.props.history.push("/booking-trip");
+      this.props.history.push(`/booking-trip/${id}`);
     }
   };
 
   render() {
     const { trips = [], priceFont, large } = this.props;
-    // console.log("TCL: render -> this.props.stations", this.props.stations);
-
-    // console.log("TCL: render -> trips", trips);
     const isEmpty = _.isEmpty(trips);
-    // console.log(
-    //   "TCL: render -> this.props.Authenticate.isAuthenticate",
-    //   this.props.Authenticate.isAuthenticated
-    // );
     return (
       <>
         {isEmpty ? (
@@ -105,7 +96,8 @@ class TripItem extends PureComponent {
                           "btn-lg wp-nor"}`}
                         onClick={() =>
                           this.handleBooking(
-                            this.props.Authenticate.isAuthenticated
+                            this.props.Authenticate.isAuthenticated,
+                            item._id
                           )
                         }
                       >

@@ -8,8 +8,8 @@ const routesHome = [
     component: HomePage
   },
   {
-    path: "/booking-trip",
-    exact: false,
+    path: "/booking-trip/:id",
+    exact: true,
     component: BookingTrip
   }
   //   {

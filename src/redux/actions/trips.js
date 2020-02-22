@@ -24,3 +24,15 @@ export const getAllTrips = () => dispatch => {
     )
     .catch(console.log());
 };
+
+export const getDetailTrip = id => dispatch => {
+  return api
+    .get(`/trips/detail-trip/${id}`)
+    .then(res =>
+      dispatch({
+        type: types.GET_DETAIL_TRIP,
+        payload: res.data
+      })
+    )
+    .catch(console.log());
+};

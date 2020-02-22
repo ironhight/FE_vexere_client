@@ -12,6 +12,13 @@ const tripsReducers = (state = initialState, action) => {
         isLoading: false,
         data: action.payload
       };
+
+    case types.GET_DETAIL_TRIP:
+      return {
+        isLoading: false,
+        data: action.payload
+      };
+
     default:
       return state;
   }
