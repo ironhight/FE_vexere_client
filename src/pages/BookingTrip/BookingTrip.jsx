@@ -1,92 +1,97 @@
 import React, { Component } from "react";
-import moment from "moment";
-import { Form, Input, Button, Icon, Select, Spin, Skeleton, Empty } from "antd";
 import { connect } from "react-redux";
 import _ from "lodash";
-import * as TripsActions from "../../redux/actions/trips";
-import * as StationsActions from "../../redux/actions/stations";
+import { getDetailTrip } from "../../redux/actions/trips";
+import { getStations } from "../../redux/actions/stations";
 
-import { Wrapper, BodyWrapper } from "../../styled";
-import { Price } from "../../components/Trips/TripItem/styled";
+import { Steps, Button, message } from "antd";
+import { StyledStep } from "./styled";
+import ContentStep1 from "../../components/BookingTripStep1/Step1";
 
-const FormItem = Form.Item;
-const { Option } = Select;
+const { Step } = Steps;
 
 class BookingTrip extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      locationArr: []
+      seatCodes: [],
+      current: 0
     };
   }
 
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
-    console.log(id);
-    this.props.getDetailTrip(id);
-    this.props.getStations();
+
+    if (_.isEmpty(this.props.stations)) {
+      this.props.getDetailTrip(id);
+    }
+
+    if (_.isEmpty(this.props.stations)) {
+      this.props.getStations();
+    }
   }
 
-  // bookingTickets = () => {
-  //   const { trip, seatCodes } = this.state;
-  //   const data = {
-  //     tripId: trip._id,
-  //     seatCodes
-  //   }
+  next() {
+    const current = this.state.current + 1;
+    this.setState({ current });
+  }
 
-  // api.defaults.headers.common['token'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5ndXllbnZhbmFAZ21haWwuY29tIiwidXNlclR5cGUiOiJjbGllbnQiLCJpYXQiOjE1Nzg2NjYyNTEsImV4cCI6MTU3ODY2OTg1MX0.HvSOMuMGrtid_8BIwfPCOgKo1xrD0RwMSInLGolSJsc";
-  // api.post("/tickets/booking", data)
-  // }
+  prev() {
+    const current = this.state.current - 1;
+    this.setState({ current });
+  }
+
   render() {
     const { stations, trips } = this.props;
-    console.log("TCL: BookingTrip -> render -> stations", stations);
+    const { current } = this.state;
 
-    const tripData = trips.data;
-    console.log("TCL: BookingTrip -> render -> tripData", tripData);
-    // const isEmpty = _.isEmpty(stations);
-    // console.log("TCL: BookingTrip -> render -> isEmpty", isEmpty);
-    console.log("chay 1 lan");
+    const steps = [
+      {
+        title: "Chọn ghế",
+        content: <ContentStep1 stations={stations} trips={trips} />
+      },
+      {
+        title: "Thanh toán",
+        content: "Second-content"
+      },
+      {
+        title: "Xác nhận",
+        content: "Last-content"
+      }
+    ];
+
     return (
-      <>
-        {/* {isEmpty ? (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        ) : ( */}
-        <div className="container">
-          <BodyWrapper>
-            <Wrapper>
-              <Skeleton
-                loading={trips.isLoading}
-                active
-                paragraph={{ rows: 1 }}
+      <div className="container">
+        <Steps current={current}>
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <StyledStep>
+          <div className="steps-content">{steps[current].content}</div>
+          <div className="steps-action">
+            {current < steps.length - 1 && (
+              <Button type="primary" onClick={() => this.next()}>
+                Next
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button
+                type="primary"
+                onClick={() => message.success("Processing complete!")}
               >
-                <h5 className="font-weight-normal d-flex align-items-center mb-3">
-                  <Icon type="car" className="mr-1" /> Trip information
-                </h5>
-                <div className="d-flex">
-                  <div className="flex-grow-1">
-                    <div className="d-flex align-items-center mb-1">
-                      {stations.name}
-                      {tripData.fromStation}
-                      <Icon type="arrow-right" className="mx-2" />
-                      {tripData.toStation}
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <Icon type="calendar" className="mr-1" />
-                      {moment(tripData.startTime).format("DD/MM/YYYY")}
-                    </div>
-                  </div>
-
-                  <Price priceFont="30px" className="flex-grow-1">
-                    {`${tripData.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                    <sup>vnd</sup>
-                  </Price>
-                </div>
-              </Skeleton>
-            </Wrapper>
-          </BodyWrapper>
-        </div>
-      </>
+                Done
+              </Button>
+            )}
+            {current > 0 && (
+              <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+                Previous
+              </Button>
+            )}
+          </div>
+        </StyledStep>
+      </div>
     );
   }
 }
@@ -98,7 +103,16 @@ const mapStatetoProps = state => {
     stations: state.stations
   };
 };
-export default connect(mapStatetoProps, {
-  ...StationsActions,
-  ...TripsActions
-})(BookingTrip);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getDetailTrip: id => {
+      dispatch(getDetailTrip(id));
+    },
+
+    getStations: () => {
+      dispatch(getStations());
+    }
+  };
+};
+export default connect(mapStatetoProps, mapDispatchToProps)(BookingTrip);
