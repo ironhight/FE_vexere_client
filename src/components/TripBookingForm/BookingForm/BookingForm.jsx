@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { DatePickerCustom, ButtonCustom } from "../styled";
-import { Select, Form, Col, Row, Icon } from "antd";
+import { Select, Form, Col, Row } from "antd";
+import { EnvironmentOutlined, CarOutlined } from "@ant-design/icons";
 import { Formik } from "formik";
 import { object, string } from "yup";
 import _ from "lodash";
@@ -117,7 +118,7 @@ class BookingForm extends Component {
                     value={values.locationFrom}
                     onChange={value => setFieldValue("locationFrom", value)}
                     suffixIcon={
-                      <Icon type="environment" style={{ color: "#28a745" }} />
+                      <EnvironmentOutlined style={{ color: "#28a745" }} />
                     }
                   >
                     {locations}
@@ -147,7 +148,7 @@ class BookingForm extends Component {
                     optionFilterProp="children"
                     onChange={value => setFieldValue("locationTo", value)}
                     suffixIcon={
-                      <Icon type="environment" style={{ color: "#dc3545" }} />
+                      <EnvironmentOutlined style={{ color: "#dc3545" }} />
                     }
                   >
                     {locations}
@@ -214,7 +215,7 @@ class BookingForm extends Component {
                     block
                     htmlType="submit"
                   >
-                    <Icon type="car" />
+                    <CarOutlined />
                     Search
                   </ButtonCustom>
                 ) : (
@@ -224,7 +225,7 @@ class BookingForm extends Component {
                     block
                     htmlType="submit"
                   >
-                    <Icon type="car" />
+                    <CarOutlined />
                     Search
                   </ButtonCustom>
                 )}

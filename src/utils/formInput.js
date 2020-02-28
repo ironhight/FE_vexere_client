@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Icon } from "antd";
+import { Form, Input } from "antd";
 import { Field } from "formik";
 
 const formInput = (
@@ -7,7 +7,7 @@ const formInput = (
   errors,
   value,
   label,
-  iconType,
+  iconComponentType,
   inputType = "text"
 ) => {
   return (
@@ -20,14 +20,7 @@ const formInput = (
         name={value}
         render={({ field }) => (
           <Input
-            suffix={
-              <Icon
-                type={iconType}
-                style={{
-                  color: "rgba(0,0,0,.25)"
-                }}
-              />
-            }
+            suffix={iconComponentType}
             type={inputType}
             size="large"
             placeholder="Enter your value..."

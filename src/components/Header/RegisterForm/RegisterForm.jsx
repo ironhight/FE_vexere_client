@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
 import { ModalCustom } from "../styled";
+import {
+  MailOutlined,
+  UserOutlined,
+  LockOutlined,
+  PhoneOutlined
+} from "@ant-design/icons";
 import { object, string, ref } from "yup";
 import { withFormik, Field } from "formik";
 import { Form, Button, DatePicker, Spin } from "antd";
@@ -44,14 +50,20 @@ class RegisterForm extends PureComponent {
       >
         <Spin spinning={isSubmitting} tip="Loading...">
           <form onSubmit={handleSubmit}>
-            {formInput(touched.email, errors.email, "email", "Email", "mail")}
+            {formInput(
+              touched.email,
+              errors.email,
+              "email",
+              "Email",
+              <MailOutlined />
+            )}
 
             {formInput(
               touched.fullName,
               errors.fullName,
               "fullName",
               "Full name",
-              "user"
+              <UserOutlined />
             )}
             <div className="row">
               <div className="col-6">
@@ -60,7 +72,7 @@ class RegisterForm extends PureComponent {
                   errors.password,
                   "password",
                   "Password",
-                  "lock",
+                  <LockOutlined />,
                   "password"
                 )}
               </div>
@@ -70,7 +82,7 @@ class RegisterForm extends PureComponent {
                   errors.password2,
                   "password2",
                   "Verify password",
-                  "lock",
+                  <LockOutlined />,
                   "password"
                 )}
               </div>
@@ -82,7 +94,7 @@ class RegisterForm extends PureComponent {
                   errors.phoneNumber,
                   "phoneNumber",
                   "Phone number",
-                  "phone"
+                  <PhoneOutlined />
                 )}
               </div>
               <div className="col-6">

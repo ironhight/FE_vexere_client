@@ -1,12 +1,11 @@
 import React, { PureComponent } from "react";
-import { Empty, Timeline } from "antd";
+import { Empty, Timeline, Button } from "antd";
 import _ from "lodash";
 import { Price, TimelineItem } from "./styled";
 import { FaArrowRight, FaCalendarAlt } from "react-icons/fa";
 import { connect } from "react-redux";
 import moment from "moment";
 import * as stationsActions from "../../../redux/actions/stations";
-// import swal from "sweetalert";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -90,19 +89,19 @@ class TripItem extends PureComponent {
                   </Price>
                   <div className="flex-grow-0">
                     <>
-                      <button
-                        type="button"
-                        className={`btn btn-success ${large &&
-                          "btn-lg wp-nor"}`}
+                      <Button
+                        type="primary"
+                        size="large"
                         onClick={() =>
                           this.handleBooking(
                             this.props.Authenticate.isAuthenticated,
                             item._id
                           )
                         }
+                        style={{ borderRadius: "5px" }}
                       >
                         Book now
-                      </button>
+                      </Button>
                     </>
                   </div>
                 </TimelineItem>

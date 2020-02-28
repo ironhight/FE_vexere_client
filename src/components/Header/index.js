@@ -118,7 +118,11 @@ class Header extends PureComponent {
                 <>
                   <NavItem>
                     <Dropdown overlay={menu}>
-                      <Avatar icon="user" className="cursor-point" />
+                      {/* <Avatar icon="user"  /> */}
+                      <Avatar
+                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                        className="cursor-point"
+                      />
                     </Dropdown>
                   </NavItem>
                 </>

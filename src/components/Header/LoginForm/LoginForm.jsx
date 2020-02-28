@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { ModalCustom } from "../styled";
 import { Button, Spin } from "antd";
 import { object, string } from "yup";
@@ -32,13 +33,19 @@ class LoginForm extends PureComponent {
       >
         <Spin spinning={isSubmitting} tip="Loading...">
           <form onSubmit={handleSubmit}>
-            {formInput(touched.email, errors.email, "email", "Email", "mail")}
+            {formInput(
+              touched.email,
+              errors.email,
+              "email",
+              "Email",
+              <MailOutlined />
+            )}
             {formInput(
               touched.password,
               errors.password,
               "password",
               "Password",
-              "lock",
+              <LockOutlined />,
               "password"
             )}
             <div className="input-group text-center mb-3 justify-content-center">

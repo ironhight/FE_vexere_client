@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Icon, Skeleton, Empty } from "antd";
+import { Skeleton, Empty } from "antd";
+import {
+  CarOutlined,
+  ArrowRightOutlined,
+  CalendarOutlined
+} from "@ant-design/icons";
 import _ from "lodash";
 import moment from "moment";
 
@@ -87,7 +92,7 @@ class ContentStep1 extends Component {
                   paragraph={{ rows: 1 }}
                 >
                   <h5 className="font-weight-normal d-flex align-items-center mb-3">
-                    <Icon type="car" className="mr-1" /> Trip information
+                    <CarOutlined className="mr-1" /> Trip information
                   </h5>
                   <div className="d-flex">
                     <div className="flex-grow-1">
@@ -97,14 +102,14 @@ class ContentStep1 extends Component {
                             elm => elm._id === trips.data.fromStation
                           ).name
                         }
-                        <Icon type="arrow-right" className="mx-2" />
+                        <ArrowRightOutlined className="mx-2" />
                         {
                           stations.find(elm => elm._id === trips.data.toStation)
                             .name
                         }
                       </div>
                       <div className="d-flex align-items-center">
-                        <Icon type="calendar" className="mr-1" />
+                        <CalendarOutlined className="mr-1" />
                         {moment(trips.data.startTime).format("DD/MM/YYYY")}
                       </div>
                     </div>
