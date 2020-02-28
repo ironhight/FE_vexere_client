@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Skeleton, Empty } from "antd";
+import { Skeleton, Empty, Row, Col } from "antd";
 import {
   CarOutlined,
   ArrowRightOutlined,
@@ -32,44 +32,92 @@ class ContentStep1 extends Component {
     console.log("run!!!!!!!!!!!");
     return (
       <div>
-        <div style={{ display: "flex" }}>
-          {tripData.seats.slice(0, 12).map((s, index) => {
-            console.log("hahah");
-            return (
+        <Row>
+          <Col span={12}>
+            <div>
+              <p>Chú thích</p>
               <div
                 style={{
-                  background: `${s.isBooked ? "red" : "grey"}`,
                   width: "50px",
-                  height: "50px"
+                  height: "50px",
+                  borderRadius: "1px solid black",
+                  backgroundColor: "red"
                 }}
-                key={index}
-                onClick={() => this.state.seatBook.push(s.code)}
-              >
-                {s.code}
+              ></div>
+              <p>Còn trống</p>
+              <p style={{ width: "50px", heigth: "50px" }}>Đã đặt</p>
+              <p style={{ width: "50px", heigth: "50px" }}>Đang chọn</p>
+            </div>
+          </Col>
+          <Col span={12}>
+            <div style={{ display: "flex" }}>
+              <div>
+                <h1>TANG 1</h1>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    width: "200px",
+                    backgroundColor: "#E6E6E6",
+                    padding: "20px 10px 10px 10px",
+                    borderRadius: "18px 18px 5px 5px"
+                  }}
+                >
+                  {tripData.seats.slice(0, 12).map((s, index) => {
+                    console.log("hahah");
+                    return (
+                      <div
+                        style={{
+                          background: `${s.isBooked ? "red" : "grey"}`,
+                          width: "50px",
+                          margin: "5px",
+                          height: "50px"
+                        }}
+                        key={index}
+                        onClick={() => this.state.seatBook.push(s.code)}
+                      >
+                        {s.code}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            );
-          })}
-        </div>
-        <br />
-        <br />
-        <br />
-        <div style={{ display: "flex" }}>
-          {tripData.seats.slice(12, 24).map((s, index) => {
-            return (
-              <div
-                style={{
-                  background: `${s.isBooked ? "red" : "grey"}`,
-                  width: "50px",
-                  height: "50px"
-                }}
-                key={index}
-                onClick={() => this.state.seatBook.push(s.code)}
-              >
-                {s.code}
+
+              <div>
+                <h1>TANG 2</h1>
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    width: "200px",
+                    backgroundColor: "#E6E6E6",
+                    padding: "20px 10px 10px 10px",
+                    borderRadius: "18px 18px 5px 5px",
+                    marginLeft: "18px"
+                  }}
+                >
+                  {tripData.seats.slice(12, 24).map((s, index) => {
+                    console.log("hahah");
+                    return (
+                      <div
+                        style={{
+                          background: `${s.isBooked ? "red" : "grey"}`,
+                          width: "50px",
+                          margin: "5px",
+                          height: "50px"
+                        }}
+                        key={index}
+                        onClick={() => this.state.seatBook.push(s.code)}
+                      >
+                        {s.code}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   };
