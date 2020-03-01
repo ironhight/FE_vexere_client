@@ -45,7 +45,7 @@ class BookingTrip extends Component {
   render() {
     const { stations, trips } = this.props;
     const { current } = this.state;
-
+    console.log("Run render BookingTrip");
     const steps = [
       {
         title: "Chọn ghế",
@@ -62,7 +62,7 @@ class BookingTrip extends Component {
     ];
 
     return (
-      <div className="container">
+      <div className="container" style={{ margin: "20px auto" }}>
         <Steps current={current}>
           {steps.map(item => (
             <Step key={item.title} title={item.title} />

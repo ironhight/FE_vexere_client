@@ -5,54 +5,47 @@ import { Button, Skeleton } from "antd";
 import { connect } from "react-redux";
 
 import * as tripsActions from "../../redux/actions/trips";
-// import { getTrips } from "../../services/Trip/actions";
-// import { countTrips } from "../../services/CountTrip/actions";
 
 class Trips extends PureComponent {
   constructor(props) {
     super(props);
-
     this.state = {
       limit: 2
     };
   }
 
   componentDidMount() {
-    this.props.getTrips(this.state.limit);
-    this.props.getAllTrips();
+    this.props.getTripsLimit(this.state.limit); //get trip limit de hien thi
+    this.props.getAllTrips(); //tinh tong trip
   }
 
   loadMore = () => {
     let { limit } = this.state;
-
+    console.log("run loadMore");
     this.setState(
       {
         limit: limit + 2
       },
       () => {
-        this.props.getTrips(this.state.limit);
+        this.props.getTripsLimit(this.state.limit);
       }
     );
   };
 
   render() {
-    const { user, trips, totalTrips } = this.props;
+    console.log("run render Trips");
+    const { countTrips } = this.props;
     const { limit } = this.state;
-    const { data, isLoading } = trips;
-    let count = totalTrips.length;
-    // console.log(data);
+
+    // let isLoading = countTrips ? false : true;
     return (
       <Section>
         <h2 className="text-center mb-5">Trip Booking</h2>
-        <Skeleton active loading={isLoading}>
-          <TripItem
-            userType={user.user.userType}
-            trips={data}
-            large
-            priceFont="30px"
-          />
+        <Skeleton acitve loading={false}>
+          <TripItem />
         </Skeleton>
-        {limit < count && (
+
+        {limit < countTrips && (
           <div className="text-center mt-3">
             <Button onClick={this.loadMore} type="dashed" size="large">
               Load more
@@ -64,12 +57,22 @@ class Trips extends PureComponent {
   }
 }
 
+//countTrips la getAllTrip tu do tinh duoc length cua trip
 const mapStateToProps = state => {
   return {
-    user: state.Authenticate,
-    trips: state.trips,
-    totalTrips: state.countTrips
+    countTrips: state.countTrips
   };
 };
 
-export default connect(mapStateToProps, tripsActions)(Trips);
+const mapDispatchToProps = dispatch => {
+  return {
+    getTripsLimit: limit => {
+      dispatch(tripsActions.getTripsLimit(limit));
+    },
+    getAllTrips: () => {
+      dispatch(tripsActions.getAllTrips());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Trips);

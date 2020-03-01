@@ -1,9 +1,7 @@
 import React from "react";
-// import "./App.css";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import ScrollToTop from "react-router-scroll-top";
-// import { connect } from "react-redux";
 
 //core components
 import Header from "./components/Header";
@@ -36,6 +34,7 @@ function App() {
     }
   };
 
+  console.log("run render App");
   return (
     <>
       <BrowserRouter>

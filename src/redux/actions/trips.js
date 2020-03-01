@@ -1,7 +1,8 @@
 import api from "../../api";
 import * as types from "../constants/actionTypes";
 
-export const getTrips = limit => dispatch => {
+//chon so trip de hien thi
+export const getTripsLimit = limit => dispatch => {
   return api
     .get(`/trips/${limit}`)
     .then(res => {

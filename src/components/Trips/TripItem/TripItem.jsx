@@ -1,24 +1,19 @@
 import React, { PureComponent } from "react";
-import { Empty, Timeline, Button } from "antd";
+import { Timeline, Button } from "antd";
 import _ from "lodash";
-import { Price, TimelineItem } from "./styled";
+// import { Price, TimelineItem } from "./styled";
 import { FaArrowRight, FaCalendarAlt } from "react-icons/fa";
 import { connect } from "react-redux";
 import moment from "moment";
 import * as stationsActions from "../../../redux/actions/stations";
+import * as tripsActions from "../../../redux/actions/trips";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 
 class TripItem extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // rate: 0
-    };
-  }
-
   componentDidMount() {
     this.props.getStations();
+    this.props.getAllTrips();
   }
 
   handleBooking = (isAuthenticated, id) => {
@@ -34,81 +29,71 @@ class TripItem extends PureComponent {
   };
 
   render() {
-    const { trips = [], priceFont, large } = this.props;
-    const isEmpty = _.isEmpty(trips);
+    console.log("Run render TripItem");
+    const { trips, stations, Authenticate } = this.props;
+    console.log("TripItem -> render -> stations", stations);
+    console.log("TripItem -> render -> trips", trips);
     return (
       <>
-        {isEmpty ? (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        ) : (
-          <Timeline>
-            {_.map(trips, (item, index) => {
-              return (
-                <TimelineItem key={index}>
-                  <div className="flex-basic-50 fz-16">
-                    <div className="d-flex align-items-center mb-1">
-                      {
-                        this.props.stations.find(
-                          elm => elm._id === item.fromStation
-                        ).name
-                      }
-                      {`, `}
-                      {
-                        this.props.stations.find(
-                          elm => elm._id === item.fromStation
-                        ).province
-                      }
-                      <FaArrowRight className="mx-3" />
-                      {
-                        this.props.stations.find(
-                          elm => elm._id === item.toStation
-                        ).name
-                      }
-                      {`, `}
-                      {
-                        this.props.stations.find(
-                          elm => elm._id === item.toStation
-                        ).province
-                      }
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <FaCalendarAlt className="mr-1" />
-                      {moment(item.startTime).format("DD/MM/YYYY")}
-                    </div>
-                  </div>
+        <Timeline style={{ marginLeft: "50px" }}>
+          {!_.isEmpty(trips)
+            ? trips.map((item, index) => {
+                console.log(
+                  "TripItem -> render -> stations.find(elm => elm._id === item.fromStation)",
+                  stations.find(elm => elm._id === item.fromStation)
+                );
+                return (
+                  <Timeline.Item key={index}>
+                    <div
+                      style={{
+                        fontSize: "18px",
+                        flexBasis: "50%"
+                      }}
+                    >
+                      <div>
+                        {/* {item.fromStation} */}
+                        {stations.find(elm => elm._id === item.fromStation)}
+                        {`, `}
+                        {stations.find(elm => elm._id === item.fromStation)}
+                        <FaArrowRight className="mx-3" />
+                        {item.toStation}
+                        {/* {stations.find(elm => elm._id === item.toStation).name}
+                    {`, `}
+                    {stations.find(elm => elm._id === item.toStation).province} */}
+                      </div>
 
-                  <Price
-                    priceFont={priceFont}
-                    className="flex-basic-25 text-left "
-                  >
-                    {item.price &&
-                      item.price
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                    <sup>vnd</sup>
-                  </Price>
-                  <div className="flex-grow-0">
-                    <>
-                      <Button
-                        type="primary"
-                        size="large"
-                        onClick={() =>
-                          this.handleBooking(
-                            this.props.Authenticate.isAuthenticated,
-                            item._id
-                          )
-                        }
-                        style={{ borderRadius: "5px" }}
-                      >
-                        Book now
-                      </Button>
-                    </>
-                  </div>
-                </TimelineItem>
-              );
-            })}
-          </Timeline>
-        )}
+                      <div style={{ opacity: "0.8" }}>
+                        <FaCalendarAlt />
+                        {moment(item.startTime).format("DD/MM/YYYY")}
+                      </div>
+                    </div>
+
+                    <div>
+                      {item.price} <span>vnđ</span>
+                    </div>
+
+                    <div>
+                      <>
+                        <Button
+                          type="primary"
+                          size="large"
+                          onClick={() =>
+                            this.handleBooking(
+                              Authenticate.isAuthenticated,
+                              item._id
+                            )
+                          }
+                          style={{ borderRadius: "5px" }}
+                        >
+                          Book now
+                        </Button>
+                      </>
+                    </div>
+                  </Timeline.Item>
+                );
+              })
+            : ""}
+        </Timeline>
       </>
     );
   }
@@ -117,8 +102,22 @@ class TripItem extends PureComponent {
 const mapStateToProps = state => {
   return {
     stations: state.stations,
-    Authenticate: state.Authenticate
+    Authenticate: state.Authenticate,
+    trips: state.trips
   };
 };
 
-export default withRouter(connect(mapStateToProps, stationsActions)(TripItem));
+const mapDispatchToProps = dispatch => {
+  return {
+    getStations: () => {
+      dispatch(stationsActions.getStations);
+    },
+    getAllTrips: () => {
+      dispatch(tripsActions.getAllTrips);
+    }
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(TripItem)
+);

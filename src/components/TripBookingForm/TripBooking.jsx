@@ -6,6 +6,7 @@ import BookingForm from "./BookingForm/BookingForm";
 
 class TripBooking extends Component {
   render() {
+    console.log("run tripBooking");
     return (
       <div>
         <section className="trip-booking">
