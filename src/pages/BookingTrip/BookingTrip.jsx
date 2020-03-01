@@ -22,14 +22,9 @@ class BookingTrip extends Component {
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
-
-    if (_.isEmpty(this.props.stations)) {
-      this.props.getDetailTrip(id);
-    }
-
-    if (_.isEmpty(this.props.stations)) {
-      this.props.getStations();
-    }
+    // console.log("BookingTrip -> componentDidMount -> id", id);
+    this.props.getDetailTrip(id);
+    this.props.getStations();
   }
 
   next() {
@@ -43,13 +38,13 @@ class BookingTrip extends Component {
   }
 
   render() {
-    const { stations, trips } = this.props;
+    // const { stations, trips } = this.props;
     const { current } = this.state;
     console.log("Run render BookingTrip");
     const steps = [
       {
         title: "Chọn ghế",
-        content: <ContentStep1 stations={stations} trips={trips} />
+        content: <ContentStep1 />
       },
       {
         title: "Thanh toán",
@@ -115,4 +110,5 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
+
 export default connect(mapStatetoProps, mapDispatchToProps)(BookingTrip);

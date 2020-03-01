@@ -10,6 +10,7 @@ import moment from "moment";
 
 import { Price } from "./styled";
 import { Wrapper, BodyWrapper } from "../../styled";
+import { connect } from "react-redux";
 
 class ContentStep1 extends Component {
   constructor(props) {
@@ -164,68 +165,63 @@ class ContentStep1 extends Component {
 
   render() {
     const { stations, trips } = this.props;
-    const isEmpty = _.isEmpty(stations);
+    console.log("ContentStep1 -> render -> stations", stations);
+    console.log("ContentStep1 -> render -> trips", trips);
+    // const isEmpty = _.isEmpty(stations);
     console.log("run render Step1");
     // console.log("object", this.state.seatBook);
     return (
-      <div>
-        {isEmpty ? (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        ) : (
-          <div className="container">
-            <BodyWrapper>
-              <Wrapper>
-                <Skeleton active>
-                  <h5 className="font-weight-normal d-flex align-items-center mb-3">
-                    <CarOutlined className="mr-1" /> Trip information
-                  </h5>
-                  <div className="d-flex">
-                    <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
-                      <div className="d-flex align-items-center mb-1">
-                        {
-                          stations.find(
-                            elm => elm._id === trips.data.fromStation
-                          ).name
-                        }
-                        <ArrowRightOutlined className="mx-2" />
-                        {
-                          stations.find(elm => elm._id === trips.data.toStation)
-                            .name
-                        }
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <CalendarOutlined className="mr-1" />
-                        {moment(trips.data.startTime).format("DD/MM/YYYY")}
-                      </div>
-                    </div>
-
-                    <div style={{ flexBasis: "35%" }}>
-                      <p>Ghế</p>
-                      <div className="seat__select"></div>
-                    </div>
-
-                    <div style={{ flexBasis: "30%" }}>
-                      <p>Tổng cộng</p>
-
-                      <Price priceFont="30px" className="flex-grow-1">
-                        {`${trips.data.price}`.replace(
-                          /\B(?=(\d{3})+(?!\d))/g,
-                          ","
-                        )}{" "}
-                        <sup>vnd</sup>
-                      </Price>
-                    </div>
+      <div className="container">
+        <BodyWrapper>
+          <Wrapper>
+            <Skeleton active loading={false}>
+              <h5 className="font-weight-normal d-flex align-items-center mb-3">
+                <CarOutlined className="mr-1" /> Trip information
+              </h5>
+              <div className="d-flex">
+                <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
+                  <div className="d-flex align-items-center mb-1">
+                    {stations.find(elm => elm._id === trips.fromStation).name}
+                    <ArrowRightOutlined className="mx-2" />
+                    {/* {!_.isEmpty(stations) &&
+                          stations.find(elm => elm._id === trips.toStation)
+                            .name} */}
                   </div>
-                </Skeleton>
-              </Wrapper>
-            </BodyWrapper>
+                  <div className="d-flex align-items-center">
+                    <CalendarOutlined className="mr-1" />
+                    {moment(trips.startTime).format("DD/MM/YYYY")}
+                  </div>
+                </div>
 
-            {this.renderSeats(trips.data)}
-          </div>
-        )}
+                <div style={{ flexBasis: "35%" }}>
+                  <p>Ghế</p>
+                  <div className="seat__select"></div>
+                </div>
+
+                <div style={{ flexBasis: "30%" }}>
+                  <p>Tổng cộng</p>
+
+                  <Price priceFont="30px" className="flex-grow-1">
+                    {`${trips.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                    <sup>vnd</sup>
+                  </Price>
+                </div>
+              </div>
+            </Skeleton>
+          </Wrapper>
+        </BodyWrapper>
+
+        {/* {this.renderSeats(trips)} */}
       </div>
     );
   }
 }
 
-export default ContentStep1;
+const mapStateToProps = state => {
+  return {
+    stations: state.stations,
+    trips: state.trips
+  };
+};
+
+export default connect(mapStateToProps, null)(ContentStep1);

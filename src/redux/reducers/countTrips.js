@@ -6,7 +6,7 @@ const initialState = [];
 const countTrips = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_ALL_TRIPS:
-      return action.payload.length;
+      return action.payload;
     default:
       return state;
   }

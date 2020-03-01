@@ -5,6 +5,7 @@ import { Button, Skeleton } from "antd";
 import { connect } from "react-redux";
 
 import * as tripsActions from "../../redux/actions/trips";
+import * as stationsAction from "../../redux/actions/stations";
 
 class Trips extends PureComponent {
   constructor(props) {
@@ -17,6 +18,7 @@ class Trips extends PureComponent {
   componentDidMount() {
     this.props.getTripsLimit(this.state.limit); //get trip limit de hien thi
     this.props.getAllTrips(); //tinh tong trip
+    this.props.getStations();
   }
 
   loadMore = () => {
@@ -36,7 +38,7 @@ class Trips extends PureComponent {
     console.log("run render Trips");
     const { countTrips } = this.props;
     const { limit } = this.state;
-
+    let count = countTrips.length;
     // let isLoading = countTrips ? false : true;
     return (
       <Section>
@@ -45,7 +47,7 @@ class Trips extends PureComponent {
           <TripItem />
         </Skeleton>
 
-        {limit < countTrips && (
+        {limit < count && (
           <div className="text-center mt-3">
             <Button onClick={this.loadMore} type="dashed" size="large">
               Load more
@@ -66,6 +68,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getStations: () => {
+      dispatch(stationsAction.getStations());
+    },
     getTripsLimit: limit => {
       dispatch(tripsActions.getTripsLimit(limit));
     },
