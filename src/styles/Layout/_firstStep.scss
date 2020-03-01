@@ -1,0 +1,51 @@
+.seat__groups {
+    text-align: left;
+    position: absolute;
+    left: 30%;
+    top: 12%;
+    line-height: 3;
+    .seat__note {
+        font-size: 16px;
+        font-weight: bold;
+        position: absolute;
+        left: -80%;
+        top: -20%;
+    }
+    .seat__info {
+        margin: 20px 0px;
+        .seat__info--empty {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            top: 8%;
+            left: -80%;
+            border: 1px solid red;
+            z-index: 3;
+        }
+        .seat__info--booked {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            left: -80%;
+            background-color: #767676;
+            z-index: 3;
+        }
+
+        .seat__info--select {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            left: -80%;
+            background-color: #5090e9;
+            z-index: 3;
+        }
+    }
+}
+
+.seat__select {
+    background: #5090e9 !important;
+}
+
+.seat__unSelect {
+    background: white;
+}

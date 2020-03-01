@@ -15,12 +15,14 @@ class ContentStep1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seatBook: []
+      seatBook: [],
+      white: true
     };
   }
 
   selectSeat = seatCode => {
     console.log("setState RUN!!!!!!!1");
+
     this.state.seatBook.push(seatCode);
     this.setState({
       // seatCodes: [...this.state.seatCodes, seatCode]
@@ -28,33 +30,50 @@ class ContentStep1 extends Component {
     });
   };
 
+  changeColor = item => {
+    // console.log("ContentStep1 -> changeColor -> changeColor");
+    this.setState({ white: !this.state.white });
+    // if()
+    this.state.seatBook.push(item);
+    console.log("ContentStep1 -> this.state.seatBook", this.state.seatBook);
+    // if (item.find(item => s.code === item.code)) {
+    //   classNameSeat = `bookSeat__select--yourSeat`
+    // }
+  };
+
   renderSeats = tripData => {
-    console.log("run!!!!!!!!!!!");
+    // console.log("run!!!!!!!!!!!");
+    let btn__class = this.state.white ? "seat__unSelect" : "seat__select";
+    console.log("ContentStep1 -> btn__class", btn__class);
     return (
       <div>
-        <Row>
+        <Row style={{ marginBottom: "30px" }}>
           <Col span={12}>
-            <div>
-              <p>Chú thích</p>
-              <div
-                style={{
-                  width: "50px",
-                  height: "50px",
-                  borderRadius: "1px solid black",
-                  backgroundColor: "red"
-                }}
-              ></div>
-              <p>Còn trống</p>
-              <p style={{ width: "50px", heigth: "50px" }}>Đã đặt</p>
-              <p style={{ width: "50px", heigth: "50px" }}>Đang chọn</p>
+            <div className="seat__groups">
+              <div className="seat__note">
+                <p>Chú thích</p>
+              </div>
+              <div className="seat__info">
+                <div className="seat__info--empty"></div>
+                <span className="seat__info--name">Còn trống</span>
+              </div>
+              <div className="seat__info">
+                <div className="seat__info--booked"></div>
+                <span className="seat__info--name">Đã đặt</span>
+              </div>
+              <div className="seat__info">
+                <div className="seat__info--select"></div>
+                <span className="seat__info--name">Đang chọn</span>
+              </div>
             </div>
           </Col>
           <Col span={12}>
             <div style={{ display: "flex" }}>
               <div>
-                <h1>TANG 1</h1>
+                <span style={{ fontSize: "20px" }}>Tầng 1</span>
                 <div
                   style={{
+                    marginTop: "10px",
                     display: "flex",
                     flexWrap: "wrap",
                     width: "200px",
@@ -64,17 +83,31 @@ class ContentStep1 extends Component {
                   }}
                 >
                   {tripData.seats.slice(0, 12).map((s, index) => {
-                    console.log("hahah");
+                    // console.log("hahah");
+                    let classNameSeat = "";
+
                     return (
+                      // <tr key = {index} className="couch__row">
+                      //   <td className="seat">
+                      //     <div className="seat--yourSeat"></div>
+                      //   </td>
+                      // </tr>
+
                       <div
+                        className={btn__class}
                         style={{
-                          background: `${s.isBooked ? "red" : "grey"}`,
+                          background: `${s.isBooked ? "#767676" : "white"}`,
+                          border: `${s.isBooked ? "#E6E6E6" : "1px solid red"}`,
                           width: "50px",
                           margin: "5px",
-                          height: "50px"
+                          height: "50px",
+                          cursor: `${s.isBooked ? "no-drop" : "pointer"}`
                         }}
                         key={index}
-                        onClick={() => this.state.seatBook.push(s.code)}
+                        onClick={() => {
+                          this.selectSeat();
+                          this.changeColor(s.code);
+                        }}
                       >
                         {s.code}
                       </div>
@@ -84,9 +117,10 @@ class ContentStep1 extends Component {
               </div>
 
               <div>
-                <h1>TANG 2</h1>
+                <span style={{ fontSize: "20px" }}>Tầng 2</span>
                 <div
                   style={{
+                    marginTop: "10px",
                     display: "flex",
                     flexWrap: "wrap",
                     width: "200px",
@@ -97,17 +131,23 @@ class ContentStep1 extends Component {
                   }}
                 >
                   {tripData.seats.slice(12, 24).map((s, index) => {
-                    console.log("hahah");
+                    // console.log("hahah");
                     return (
                       <div
+                        className={btn__class}
                         style={{
-                          background: `${s.isBooked ? "red" : "grey"}`,
+                          background: `${s.isBooked ? "#767676" : "white"}`,
+                          border: `${s.isBooked ? "#E6E6E6" : "1px solid red"}`,
                           width: "50px",
                           margin: "5px",
-                          height: "50px"
+                          height: "50px",
+                          cursor: `${s.isBooked ? "no-drop" : "pointer"}`
                         }}
                         key={index}
-                        onClick={() => this.state.seatBook.push(s.code)}
+                        onClick={() => {
+                          this.selectSeat();
+                          this.changeColor(s.code);
+                        }}
                       >
                         {s.code}
                       </div>
@@ -125,7 +165,8 @@ class ContentStep1 extends Component {
   render() {
     const { stations, trips } = this.props;
     const isEmpty = _.isEmpty(stations);
-    console.log("object", this.state.seatBook);
+    console.log("run render Step1");
+    // console.log("object", this.state.seatBook);
     return (
       <div>
         {isEmpty ? (
@@ -134,16 +175,12 @@ class ContentStep1 extends Component {
           <div className="container">
             <BodyWrapper>
               <Wrapper>
-                <Skeleton
-                  loading={trips.isLoading}
-                  active
-                  paragraph={{ rows: 1 }}
-                >
+                <Skeleton active>
                   <h5 className="font-weight-normal d-flex align-items-center mb-3">
                     <CarOutlined className="mr-1" /> Trip information
                   </h5>
                   <div className="d-flex">
-                    <div className="flex-grow-1">
+                    <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
                       <div className="d-flex align-items-center mb-1">
                         {
                           stations.find(
@@ -162,13 +199,22 @@ class ContentStep1 extends Component {
                       </div>
                     </div>
 
-                    <Price priceFont="30px" className="flex-grow-1">
-                      {`${trips.data.price}`.replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        ","
-                      )}{" "}
-                      <sup>vnd</sup>
-                    </Price>
+                    <div style={{ flexBasis: "35%" }}>
+                      <p>Ghế</p>
+                      <div className="seat__select"></div>
+                    </div>
+
+                    <div style={{ flexBasis: "30%" }}>
+                      <p>Tổng cộng</p>
+
+                      <Price priceFont="30px" className="flex-grow-1">
+                        {`${trips.data.price}`.replace(
+                          /\B(?=(\d{3})+(?!\d))/g,
+                          ","
+                        )}{" "}
+                        <sup>vnd</sup>
+                      </Price>
+                    </div>
                   </div>
                 </Skeleton>
               </Wrapper>
