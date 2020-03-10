@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
-import { getDetailTrip } from "../../redux/actions/trips";
-import { getStations } from "../../redux/actions/stations";
+// import { getDetailTrip } from "../../redux/actions/trips";
+// import { getStations } from "../../redux/actions/stations";
+
+import * as tripActions from "../../redux/actions/trips";
+import * as stationActions from "../../redux/actions/stations";
 
 import { Steps, Button, message } from "antd";
 import { StyledStep } from "./styled";
@@ -14,7 +17,6 @@ class BookingTrip extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seatCodes: [],
       current: 0
     };
   }
@@ -23,7 +25,7 @@ class BookingTrip extends Component {
     const { match } = this.props;
     const { id } = match.params;
     // console.log("BookingTrip -> componentDidMount -> id", id);
-    this.props.getDetailTrip(id);
+    this.props.getTripByID(id);
     this.props.getStations();
   }
 
@@ -91,24 +93,23 @@ class BookingTrip extends Component {
   }
 }
 
-const mapStatetoProps = state => {
-  return {
-    user: state.Authenticate,
-    trips: state.trips,
-    stations: state.stations
-  };
-};
+// const mapStatetoProps = state => {
+//   return {
+//     user: state.Authenticate,
+//     trips: state.trips,
+//     stations: state.stations
+//   };
+// };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getDetailTrip: id => {
-      dispatch(getDetailTrip(id));
+    getTripByID: id => {
+      dispatch(tripActions.getDetailTrip(id));
     },
-
     getStations: () => {
-      dispatch(getStations());
+      dispatch(stationActions.getStations());
     }
   };
 };
 
-export default connect(mapStatetoProps, mapDispatchToProps)(BookingTrip);
+export default connect(null, mapDispatchToProps)(BookingTrip);

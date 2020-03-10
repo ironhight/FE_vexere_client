@@ -11,6 +11,8 @@ import moment from "moment";
 import { Price } from "./styled";
 import { Wrapper, BodyWrapper } from "../../styled";
 import { connect } from "react-redux";
+import * as stationsAction from "../../redux/actions/stations";
+import * as tripsActions from "../../redux/actions/trips";
 
 class ContentStep1 extends Component {
   constructor(props) {
@@ -20,6 +22,15 @@ class ContentStep1 extends Component {
       white: true
     };
   }
+
+  // componentDidMount() {
+  //   const { match } = this.props;
+  //   const { id } = match.params;
+  //   console.log("ContentStep1 -> componentDidMount -> id", id);
+  //   this.props.getDetailTrip(id); //get trip limit de hien thi
+  //   // this.props.getAllTrips(); //tinh tong trip
+  //   this.props.getStations();
+  // }
 
   selectSeat = seatCode => {
     console.log("setState RUN!!!!!!!1");
@@ -48,117 +59,107 @@ class ContentStep1 extends Component {
     console.log("ContentStep1 -> btn__class", btn__class);
     return (
       <div>
-        <Row style={{ marginBottom: "30px" }}>
-          <Col span={12}>
-            <div className="seat__groups">
-              <div className="seat__note">
-                <p>Chú thích</p>
-              </div>
-              <div className="seat__info">
-                <div className="seat__info--empty"></div>
-                <span className="seat__info--name">Còn trống</span>
-              </div>
-              <div className="seat__info">
-                <div className="seat__info--booked"></div>
-                <span className="seat__info--name">Đã đặt</span>
-              </div>
-              <div className="seat__info">
-                <div className="seat__info--select"></div>
-                <span className="seat__info--name">Đang chọn</span>
-              </div>
-            </div>
-          </Col>
-          <Col span={12}>
-            <div style={{ display: "flex" }}>
-              <div>
-                <span style={{ fontSize: "20px" }}>Tầng 1</span>
-                <div
-                  style={{
-                    marginTop: "10px",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    width: "200px",
-                    backgroundColor: "#E6E6E6",
-                    padding: "20px 10px 10px 10px",
-                    borderRadius: "18px 18px 5px 5px"
-                  }}
-                >
-                  {tripData.seats.slice(0, 12).map((s, index) => {
-                    // console.log("hahah");
-                    let classNameSeat = "";
-
-                    return (
-                      // <tr key = {index} className="couch__row">
-                      //   <td className="seat">
-                      //     <div className="seat--yourSeat"></div>
-                      //   </td>
-                      // </tr>
-
-                      <div
-                        className={btn__class}
-                        style={{
-                          background: `${s.isBooked ? "#767676" : "white"}`,
-                          border: `${s.isBooked ? "#E6E6E6" : "1px solid red"}`,
-                          width: "50px",
-                          margin: "5px",
-                          height: "50px",
-                          cursor: `${s.isBooked ? "no-drop" : "pointer"}`
-                        }}
-                        key={index}
-                        onClick={() => {
-                          this.selectSeat();
-                          this.changeColor(s.code);
-                        }}
-                      >
-                        {s.code}
-                      </div>
-                    );
-                  })}
+        {!_.isEmpty(tripData) ? (
+          <Row style={{ marginBottom: "30px" }}>
+            <Col span={12}>
+              <div className="seat__groups">
+                <div className="seat__note">
+                  <p>Chú thích</p>
+                </div>
+                <div className="seat__info">
+                  <div className="seat__info--empty"></div>
+                  <span className="seat__info--name">Còn trống</span>
+                </div>
+                <div className="seat__info">
+                  <div className="seat__info--booked"></div>
+                  <span className="seat__info--name">Đã đặt</span>
+                </div>
+                <div className="seat__info">
+                  <div className="seat__info--select"></div>
+                  <span className="seat__info--name">Đang chọn</span>
                 </div>
               </div>
+            </Col>
+            <Col span={12}>
+              <div style={{ display: "flex" }}>
+                <div>
+                  <span style={{ fontSize: "20px" }}>Tầng 1</span>
+                  <div
+                    style={{
+                      marginTop: "10px",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      width: "200px",
+                      backgroundColor: "#E6E6E6",
+                      padding: "20px 10px 10px 10px",
+                      borderRadius: "18px 18px 5px 5px"
+                    }}
+                  >
+                    {tripData.seats.slice(0, 12).map((s, index) => {
+                      return (
+                        <tr key={index} className="couch__row">
+                          <td className="seat">
+                            <div
+                              className="seat--yourSeat"
+                              style={{
+                                width: "50px",
+                                height: "50px",
+                                background: "red",
+                                margin: "5px"
+                              }}
+                            ></div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </div>
+                </div>
 
-              <div>
-                <span style={{ fontSize: "20px" }}>Tầng 2</span>
-                <div
-                  style={{
-                    marginTop: "10px",
-                    display: "flex",
-                    flexWrap: "wrap",
-                    width: "200px",
-                    backgroundColor: "#E6E6E6",
-                    padding: "20px 10px 10px 10px",
-                    borderRadius: "18px 18px 5px 5px",
-                    marginLeft: "18px"
-                  }}
-                >
-                  {tripData.seats.slice(12, 24).map((s, index) => {
-                    // console.log("hahah");
-                    return (
-                      <div
-                        className={btn__class}
-                        style={{
-                          background: `${s.isBooked ? "#767676" : "white"}`,
-                          border: `${s.isBooked ? "#E6E6E6" : "1px solid red"}`,
-                          width: "50px",
-                          margin: "5px",
-                          height: "50px",
-                          cursor: `${s.isBooked ? "no-drop" : "pointer"}`
-                        }}
-                        key={index}
-                        onClick={() => {
-                          this.selectSeat();
-                          this.changeColor(s.code);
-                        }}
-                      >
-                        {s.code}
-                      </div>
-                    );
-                  })}
+                <div>
+                  <span style={{ fontSize: "20px" }}>Tầng 2</span>
+                  <div
+                    style={{
+                      marginTop: "10px",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      width: "200px",
+                      backgroundColor: "#E6E6E6",
+                      padding: "20px 10px 10px 10px",
+                      borderRadius: "18px 18px 5px 5px",
+                      marginLeft: "18px"
+                    }}
+                  >
+                    {tripData.seats.slice(12, 24).map((s, index) => {
+                      // console.log("hahah");
+                      return (
+                        <div
+                          className={btn__class}
+                          style={{
+                            background: `${s.isBooked ? "#767676" : "white"}`,
+                            border: `${
+                              s.isBooked ? "#E6E6E6" : "1px solid red"
+                            }`,
+                            width: "50px",
+                            margin: "5px",
+                            height: "50px",
+                            cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                          }}
+                          key={index}
+                          onClick={() => {
+                            this.selectSeat();
+                            this.changeColor(s.code);
+                          }}
+                        >
+                          {s.code}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </div>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        ) : null}
       </div>
     );
   };
@@ -181,11 +182,13 @@ class ContentStep1 extends Component {
               <div className="d-flex">
                 <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
                   <div className="d-flex align-items-center mb-1">
-                    {stations.find(elm => elm._id === trips.fromStation).name}
+                    {!_.isEmpty(stations)
+                      ? stations.find(elm => elm._id === trips.fromStation).name
+                      : null}
                     <ArrowRightOutlined className="mx-2" />
-                    {/* {!_.isEmpty(stations) &&
-                          stations.find(elm => elm._id === trips.toStation)
-                            .name} */}
+                    {!_.isEmpty(stations)
+                      ? stations.find(elm => elm._id === trips.toStation).name
+                      : null}
                   </div>
                   <div className="d-flex align-items-center">
                     <CalendarOutlined className="mr-1" />
@@ -211,17 +214,38 @@ class ContentStep1 extends Component {
           </Wrapper>
         </BodyWrapper>
 
-        {/* {this.renderSeats(trips)} */}
+        {this.renderSeats(trips)}
       </div>
     );
   }
 }
 
+// const mapStatetoProps = state => {
+//   return {
+
+//     trips: state.trips,
+//     stations: state.stations
+//   };
+// };
+
 const mapStateToProps = state => {
   return {
+    user: state.Authenticate,
     stations: state.stations,
     trips: state.trips
   };
 };
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getDetailTrip: id => {
+//       dispatch(tripsActions.getDetailTrip(id));
+//     },
+
+//     getStations: () => {
+//       dispatch(stationsAction.getStations());
+//     }
+//   };
+// };
 
 export default connect(mapStateToProps, null)(ContentStep1);
