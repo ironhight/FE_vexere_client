@@ -6,7 +6,7 @@
 - You can resgister, login, change profile, search trips, book tickets and receive ticket information via your email.
 - Interactive with API from project : https://github.com/ironhight/backend_vexere . You must download and run 2 project at the same time
 
-![home](https://user-images.githubusercontent.com/56241790/74842894-aa277d00-535d-11ea-9846-478264a43bed.png)
+![home](https://user-images.githubusercontent.com/56241790/76656318-e4bdb780-65a1-11ea-9a51-1bb801c8e572.png)
 
 ## Available Scripts
 
