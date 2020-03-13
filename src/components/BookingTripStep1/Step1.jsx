@@ -18,45 +18,31 @@ class ContentStep1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seatBook: [],
-      white: true
+      seatBook: []
     };
   }
 
-  // componentDidMount() {
-  //   const { match } = this.props;
-  //   const { id } = match.params;
-  //   console.log("ContentStep1 -> componentDidMount -> id", id);
-  //   this.props.getDetailTrip(id); //get trip limit de hien thi
-  //   // this.props.getAllTrips(); //tinh tong trip
-  //   this.props.getStations();
-  // }
+  changeColor = (seatCode, isBooked) => {
+    if (isBooked === false) {
+      let index = this.state.seatBook.findIndex(item => item === seatCode);
+      index === -1
+        ? this.state.seatBook.push(seatCode)
+        : this.state.seatBook.splice(index, 1);
+    }
 
-  selectSeat = seatCode => {
-    console.log("setState RUN!!!!!!!1");
-
-    this.state.seatBook.push(seatCode);
     this.setState({
-      // seatCodes: [...this.state.seatCodes, seatCode]
       seatBook: this.state.seatBook
     });
-  };
-
-  changeColor = item => {
-    // console.log("ContentStep1 -> changeColor -> changeColor");
-    this.setState({ white: !this.state.white });
-    // if()
-    this.state.seatBook.push(item);
+    console.log("ContentStep1 -> getCode", this.state.getCode);
     console.log("ContentStep1 -> this.state.seatBook", this.state.seatBook);
-    // if (item.find(item => s.code === item.code)) {
-    //   classNameSeat = `bookSeat__select--yourSeat`
-    // }
   };
 
   renderSeats = tripData => {
-    // console.log("run!!!!!!!!!!!");
-    let btn__class = this.state.white ? "seat__unSelect" : "seat__select";
-    console.log("ContentStep1 -> btn__class", btn__class);
+    console.log("ContentStep1 -> tripData!!!!!!!", tripData.seats);
+    const { getCode } = this.state;
+    console.log("ContentStep1 -> getCode", getCode);
+    let choose;
+
     return (
       <div>
         {!_.isEmpty(tripData) ? (
@@ -96,20 +82,31 @@ class ContentStep1 extends Component {
                     }}
                   >
                     {tripData.seats.slice(0, 12).map((s, index) => {
+                      this.state.seatBook.includes(s.code)
+                        ? (choose = "seat__select")
+                        : (choose = "seat_unSelect");
+
                       return (
-                        <tr key={index} className="couch__row">
-                          <td className="seat">
-                            <div
-                              className="seat--yourSeat"
-                              style={{
-                                width: "50px",
-                                height: "50px",
-                                background: "red",
-                                margin: "5px"
-                              }}
-                            ></div>
-                          </td>
-                        </tr>
+                        <td key={index}>
+                          <div
+                            className={`seat ${choose}`}
+                            style={{
+                              background: `${s.isBooked ? "#767676" : "white"}`,
+                              border: `${
+                                s.isBooked ? "#E6E6E6" : "1px solid red"
+                              }`,
+                              width: "50px",
+                              margin: "5px",
+                              height: "50px",
+                              cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                            }}
+                            onClick={() => {
+                              this.changeColor(s.code, s.isBooked);
+                            }}
+                          >
+                            {s.code}
+                          </div>
+                        </td>
                       );
                     })}
                   </div>
@@ -130,28 +127,30 @@ class ContentStep1 extends Component {
                     }}
                   >
                     {tripData.seats.slice(12, 24).map((s, index) => {
-                      // console.log("hahah");
+                      this.state.seatBook.includes(s.code)
+                        ? (choose = "seat__select")
+                        : (choose = "seat_unSelect");
                       return (
-                        <div
-                          className={btn__class}
-                          style={{
-                            background: `${s.isBooked ? "#767676" : "white"}`,
-                            border: `${
-                              s.isBooked ? "#E6E6E6" : "1px solid red"
-                            }`,
-                            width: "50px",
-                            margin: "5px",
-                            height: "50px",
-                            cursor: `${s.isBooked ? "no-drop" : "pointer"}`
-                          }}
-                          key={index}
-                          onClick={() => {
-                            this.selectSeat();
-                            this.changeColor(s.code);
-                          }}
-                        >
-                          {s.code}
-                        </div>
+                        <td key={index}>
+                          <div
+                            className={`seat ${choose}`}
+                            style={{
+                              background: `${s.isBooked ? "#767676" : "white"}`,
+                              border: `${
+                                s.isBooked ? "#E6E6E6" : "1px solid red"
+                              }`,
+                              width: "50px",
+                              margin: "5px",
+                              height: "50px",
+                              cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                            }}
+                            onClick={() => {
+                              this.changeColor(s.code, s.isBooked);
+                            }}
+                          >
+                            {s.code}
+                          </div>
+                        </td>
                       );
                     })}
                   </div>
@@ -166,8 +165,10 @@ class ContentStep1 extends Component {
 
   render() {
     const { stations, trips } = this.props;
+    console.log("dadsfadsf", this.state.seatBook);
     console.log("ContentStep1 -> render -> stations", stations);
-    console.log("ContentStep1 -> render -> trips", trips);
+    console.log("ContentStep1 -> render -> trips", trips.seats);
+    // console.log("ContentStep1 -> render -> trips", trips)
     // const isEmpty = _.isEmpty(stations);
     console.log("run render Step1");
     // console.log("object", this.state.seatBook);

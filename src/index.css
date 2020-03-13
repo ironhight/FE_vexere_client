@@ -1,6 +1,41 @@
 div.steps-content {
   padding-top: 20px !important; }
 
+.ant-select-selection-placeholder {
+  font-size: 19px; }
+
+.ant-select-selector {
+  height: 55px !important; }
+
+.ant-select-selection-search-input {
+  margin-top: 10px; }
+
+.ant-select-selection-placeholder {
+  padding: 6px !important; }
+
+.ant-picker-large {
+  padding: 11.7px 6.5px !important; }
+
+.ant-picker-large .ant-picker-input > input {
+  font-size: 19px !important; }
+
+.btn--search {
+  background-color: #f8ae00 !important; }
+
+.btn--search {
+  height: 55px !important; }
+
+.btn--search > span {
+  font-size: 18px;
+  font-weight: bold; }
+
+.btn--search:hover,
+.btn--search:focus {
+  color: black !important; }
+
+.booking-form {
+  width: 65%; }
+
 .seat__groups {
   text-align: left;
   position: absolute;

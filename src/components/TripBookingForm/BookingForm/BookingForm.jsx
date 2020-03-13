@@ -25,9 +25,18 @@ class BookingForm extends Component {
     const { stations } = this.props;
     return (
       <div>
+        <h2
+          style={{
+            textAlign: "center",
+            color: "white",
+            marginBottom: "22px",
+            fontSize: "34px"
+          }}
+        >
+          VeXeRe.com - Hệ thống đặt vé xe khách lớn nhất Việt Nam
+        </h2>
         <Row>
           <Col span={8}>
-            <label>From</label>
             <FormItem>
               <Select
                 name="locationFrom"
@@ -43,7 +52,6 @@ class BookingForm extends Component {
             </FormItem>
           </Col>
           <Col span={8}>
-            <label>To</label>
             <FormItem>
               <Select
                 name="locationTo"
@@ -59,7 +67,6 @@ class BookingForm extends Component {
             </FormItem>
           </Col>
           <Col span={4}>
-            <label>Date</label>
             <FormItem>
               <DatePickerCustom
                 allowClear={false}
@@ -74,9 +81,13 @@ class BookingForm extends Component {
             </FormItem>
           </Col>
           <Col span={4}>
-            <ButtonCustom type="primary" size="large" block htmlType="submit">
-              <CarOutlined />
-              Search
+            <ButtonCustom
+              size="large"
+              block
+              htmlType="submit"
+              className="btn--search"
+            >
+              TÌM VÉ XE
             </ButtonCustom>
           </Col>
         </Row>
