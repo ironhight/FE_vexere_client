@@ -1,0 +1,23 @@
+.trip {
+  .trip__item {
+    margin-left: 50px;
+
+    .trip__item__from-to {
+      font-size: 18px;
+      flex-basis: 50%;
+      .trip__item--day {
+        margin-top: 5px;
+        font-size: 16px;
+        opacity: 0.8;
+      }
+    }
+
+    .trip__item__price {
+      font-size: 20px;
+      flex-basis: 12%;
+    }
+    .trip__item__btn {
+      flex-basis: 25%;
+    }
+  }
+}

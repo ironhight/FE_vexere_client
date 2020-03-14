@@ -1,3 +1,9 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box; }
+
 div.steps-content {
   padding-top: 20px !important; }
 
@@ -32,6 +38,10 @@ div.steps-content {
 .btn--search:hover,
 .btn--search:focus {
   color: black !important; }
+
+.ant-timeline-item-content {
+  display: flex;
+  width: 100%; }
 
 .booking-form {
   width: 65%; }
@@ -78,3 +88,18 @@ div.steps-content {
 
 .seat__unSelect {
   background: white; }
+
+.trip .trip__item {
+  margin-left: 50px; }
+  .trip .trip__item .trip__item__from-to {
+    font-size: 18px;
+    flex-basis: 50%; }
+    .trip .trip__item .trip__item__from-to .trip__item--day {
+      margin-top: 5px;
+      font-size: 16px;
+      opacity: 0.8; }
+  .trip .trip__item .trip__item__price {
+    font-size: 20px;
+    flex-basis: 12%; }
+  .trip .trip__item .trip__item__btn {
+    flex-basis: 25%; }

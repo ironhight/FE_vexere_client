@@ -41,3 +41,8 @@ div.steps-content {
 .btn--search:focus {
   color: black !important;
 }
+
+.ant-timeline-item-content {
+  display: flex;
+  width: 100%;
+}

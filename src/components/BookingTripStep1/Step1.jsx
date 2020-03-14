@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Skeleton, Empty, Row, Col } from "antd";
+import { Skeleton, Row, Col } from "antd";
 import {
   CarOutlined,
   ArrowRightOutlined,
@@ -11,8 +11,6 @@ import moment from "moment";
 import { Price } from "./styled";
 import { Wrapper, BodyWrapper } from "../../styled";
 import { connect } from "react-redux";
-import * as stationsAction from "../../redux/actions/stations";
-import * as tripsActions from "../../redux/actions/trips";
 
 class ContentStep1 extends Component {
   constructor(props) {
@@ -81,34 +79,38 @@ class ContentStep1 extends Component {
                       borderRadius: "18px 18px 5px 5px"
                     }}
                   >
-                    {tripData.seats.slice(0, 12).map((s, index) => {
-                      this.state.seatBook.includes(s.code)
-                        ? (choose = "seat__select")
-                        : (choose = "seat_unSelect");
+                    {_.get(tripData, "seats", [])
+                      .slice(0, 12)
+                      .map((s, index) => {
+                        this.state.seatBook.includes(s.code)
+                          ? (choose = "seat__select")
+                          : (choose = "seat_unSelect");
 
-                      return (
-                        <td key={index}>
-                          <div
-                            className={`seat ${choose}`}
-                            style={{
-                              background: `${s.isBooked ? "#767676" : "white"}`,
-                              border: `${
-                                s.isBooked ? "#E6E6E6" : "1px solid red"
-                              }`,
-                              width: "50px",
-                              margin: "5px",
-                              height: "50px",
-                              cursor: `${s.isBooked ? "no-drop" : "pointer"}`
-                            }}
-                            onClick={() => {
-                              this.changeColor(s.code, s.isBooked);
-                            }}
-                          >
-                            {s.code}
-                          </div>
-                        </td>
-                      );
-                    })}
+                        return (
+                          <td key={index}>
+                            <div
+                              className={`seat ${choose}`}
+                              style={{
+                                background: `${
+                                  s.isBooked ? "#767676" : "white"
+                                }`,
+                                border: `${
+                                  s.isBooked ? "#E6E6E6" : "1px solid red"
+                                }`,
+                                width: "50px",
+                                margin: "5px",
+                                height: "50px",
+                                cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                              }}
+                              onClick={() => {
+                                this.changeColor(s.code, s.isBooked);
+                              }}
+                            >
+                              {s.code}
+                            </div>
+                          </td>
+                        );
+                      })}
                   </div>
                 </div>
 
@@ -126,33 +128,37 @@ class ContentStep1 extends Component {
                       marginLeft: "18px"
                     }}
                   >
-                    {tripData.seats.slice(12, 24).map((s, index) => {
-                      this.state.seatBook.includes(s.code)
-                        ? (choose = "seat__select")
-                        : (choose = "seat_unSelect");
-                      return (
-                        <td key={index}>
-                          <div
-                            className={`seat ${choose}`}
-                            style={{
-                              background: `${s.isBooked ? "#767676" : "white"}`,
-                              border: `${
-                                s.isBooked ? "#E6E6E6" : "1px solid red"
-                              }`,
-                              width: "50px",
-                              margin: "5px",
-                              height: "50px",
-                              cursor: `${s.isBooked ? "no-drop" : "pointer"}`
-                            }}
-                            onClick={() => {
-                              this.changeColor(s.code, s.isBooked);
-                            }}
-                          >
-                            {s.code}
-                          </div>
-                        </td>
-                      );
-                    })}
+                    {_.get(tripData, "seats", [])
+                      .slice(12, 24)
+                      .map((s, index) => {
+                        this.state.seatBook.includes(s.code)
+                          ? (choose = "seat__select")
+                          : (choose = "seat_unSelect");
+                        return (
+                          <td key={index}>
+                            <div
+                              className={`seat ${choose}`}
+                              style={{
+                                background: `${
+                                  s.isBooked ? "#767676" : "white"
+                                }`,
+                                border: `${
+                                  s.isBooked ? "#E6E6E6" : "1px solid red"
+                                }`,
+                                width: "50px",
+                                margin: "5px",
+                                height: "50px",
+                                cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                              }}
+                              onClick={() => {
+                                this.changeColor(s.code, s.isBooked);
+                              }}
+                            >
+                              {s.code}
+                            </div>
+                          </td>
+                        );
+                      })}
                   </div>
                 </div>
               </div>
@@ -165,12 +171,16 @@ class ContentStep1 extends Component {
 
   render() {
     const { stations, trips } = this.props;
-    console.log("dadsfadsf", this.state.seatBook);
-    console.log("ContentStep1 -> render -> stations", stations);
-    console.log("ContentStep1 -> render -> trips", trips.seats);
+    // console.log("ContentStep1 -> render -> trips", trips);
+    // let tripsData = trips.trips;
+    // console.log("ContentStep1 -> render -> tripsData??????", tripsData);
+    // console.log("dadsfadsf", this.state.seatBook);
+    // console.log("ContentStep1 -> render -> stations", stations);
+    // console.log("ContentStep1 -> render -> trips", trips.seats);
     // console.log("ContentStep1 -> render -> trips", trips)
     // const isEmpty = _.isEmpty(stations);
-    console.log("run render Step1");
+    // console.log("run render Step1");
+    // let test;
     // console.log("object", this.state.seatBook);
     return (
       <div className="container">
@@ -183,13 +193,26 @@ class ContentStep1 extends Component {
               <div className="d-flex">
                 <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
                   <div className="d-flex align-items-center mb-1">
-                    {!_.isEmpty(stations)
-                      ? stations.find(elm => elm._id === trips.fromStation).name
-                      : null}
+                    {!_.isEmpty(stations) && !_.isEmpty(trips)
+                      ? _.get(
+                          _.find(stations, {
+                            _id: trips.fromStation
+                          }),
+                          "name",
+                          []
+                        )
+                      : console.log("ERROR")}
+
                     <ArrowRightOutlined className="mx-2" />
-                    {!_.isEmpty(stations)
-                      ? stations.find(elm => elm._id === trips.toStation).name
-                      : null}
+                    {!_.isEmpty(stations) && !_.isEmpty(trips)
+                      ? _.get(
+                          _.find(stations, {
+                            _id: trips.toStation
+                          }),
+                          "name",
+                          []
+                        )
+                      : console.log("ERROR")}
                   </div>
                   <div className="d-flex align-items-center">
                     <CalendarOutlined className="mr-1" />
@@ -221,14 +244,6 @@ class ContentStep1 extends Component {
   }
 }
 
-// const mapStatetoProps = state => {
-//   return {
-
-//     trips: state.trips,
-//     stations: state.stations
-//   };
-// };
-
 const mapStateToProps = state => {
   return {
     user: state.Authenticate,
@@ -236,17 +251,5 @@ const mapStateToProps = state => {
     trips: state.trips
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getDetailTrip: id => {
-//       dispatch(tripsActions.getDetailTrip(id));
-//     },
-
-//     getStations: () => {
-//       dispatch(stationsAction.getStations());
-//     }
-//   };
-// };
 
 export default connect(mapStateToProps, null)(ContentStep1);

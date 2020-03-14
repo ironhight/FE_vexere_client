@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Timeline, Button } from "antd";
 import _ from "lodash";
 // import { Price, TimelineItem } from "./styled";
@@ -8,12 +8,7 @@ import moment from "moment";
 import { withRouter } from "react-router-dom";
 import Swal from "sweetalert2";
 
-class TripItem extends PureComponent {
-  // componentDidMount() {
-  //   this.props.getStations();
-  // this.props.getAllTrips();
-  // }
-
+class TripItem extends Component {
   handleBooking = (isAuthenticated, id) => {
     if (!isAuthenticated) {
       return Swal.fire(
@@ -29,54 +24,61 @@ class TripItem extends PureComponent {
   render() {
     console.log("Run render TripItem");
     const { trips, stations, Authenticate } = this.props;
-    // console.log("TripItem -> render -> stations", stations);
     // console.log("TripItem -> render -> trips", trips);
+    // let tripsData = trips.trips;
+    // console.log("TripItem -> render -> tripsData", tripsData);
     return (
       <>
-        <Timeline style={{ marginLeft: "50px" }}>
-          {!_.isEmpty(trips)
-            ? trips.map((item, index) => {
-                return (
-                  <Timeline.Item key={index}>
-                    <div style={{ fontSize: "18px", flexBasis: "50%" }}>
-                      {!_.isEmpty(stations) &&
+        <Timeline className="trip">
+          {!_.isEmpty(trips) && Array.isArray(trips)
+            ? trips.map((item, index) => (
+                <Timeline.Item key={index} className="trip__item">
+                  <div className="trip__item__from-to">
+                    {!_.isEmpty(stations) &&
+                      stations.find(elm => elm._id === item.fromStation).name +
+                        ", " +
                         stations.find(elm => elm._id === item.fromStation)
-                          .name +
-                          ", " +
-                          stations.find(elm => elm._id === item.fromStation)
-                            .province}
-                      <FaArrowRight className="mx-3" />
-                      {!_.isEmpty(stations) &&
-                        stations.find(elm => elm._id === item.toStation).name +
-                          ", " +
-                          stations.find(elm => elm._id === item.toStation)
-                            .province}
+                          .province}
+                    <FaArrowRight className="mx-3" />
+                    {!_.isEmpty(stations) &&
+                      stations.find(elm => elm._id === item.toStation).name +
+                        ", " +
+                        stations.find(elm => elm._id === item.toStation)
+                          .province}
 
-                      <div style={{ opacity: "0.8" }}>
-                        <FaCalendarAlt />
-                        {moment(item.startTime).format("DD/MM/YYYY")}
-                      </div>
-                    </div>
-
-                    <div>
-                      <Button
-                        type="primary"
-                        size="large"
-                        onClick={() =>
-                          this.handleBooking(
-                            Authenticate.isAuthenticated,
-                            item._id
-                          )
-                        }
-                        style={{ borderRadius: "5px" }}
+                    <div className="trip__item--day">
+                      <span
+                        style={{
+                          marginRight: "5px",
+                          bottom: "2px",
+                          position: "relative"
+                        }}
                       >
-                        Book now
-                      </Button>
+                        <FaCalendarAlt />
+                      </span>
+                      {moment(item.startTime).format("DD/MM/YYYY")}
                     </div>
-                  </Timeline.Item>
-                );
-              })
-            : ""}
+                  </div>
+
+                  <div className="trip__item__price">{item.price} vnd</div>
+                  <div className="trip__item__btn">
+                    <Button
+                      type="primary"
+                      size="large"
+                      onClick={() =>
+                        this.handleBooking(
+                          Authenticate.isAuthenticated,
+                          item._id
+                        )
+                      }
+                      style={{ borderRadius: "5px" }}
+                    >
+                      Book now
+                    </Button>
+                  </div>
+                </Timeline.Item>
+              ))
+            : null}
         </Timeline>
       </>
     );
@@ -90,17 +92,5 @@ const mapStateToProps = state => {
     trips: state.trips
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getStations: () => {
-//       dispatch(stationsActions.getStations);
-//     }
-
-//     // getAllTrips: () => {
-//     //   dispatch(tripsActions.getAllTrips);
-//     // }
-//   };
-// };
 
 export default withRouter(connect(mapStateToProps, null)(TripItem));

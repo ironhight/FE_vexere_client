@@ -12,7 +12,6 @@ class TripBooking extends Component {
         <section className="trip-booking">
           <Parallax
             bgImage={ParallaxImg}
-            // blur={10}
             strength={500}
             bgImageAlt="trip booking"
           >
