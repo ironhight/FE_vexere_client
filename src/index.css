@@ -61,33 +61,44 @@ div.steps-content {
   .seat__groups .seat__info {
     margin: 20px 0px; }
     .seat__groups .seat__info .seat__info--empty {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       position: absolute;
-      top: 8%;
+      top: 11%;
       left: -80%;
       border: 1px solid red;
       z-index: 3; }
     .seat__groups .seat__info .seat__info--booked {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       position: absolute;
       left: -80%;
       background-color: #767676;
-      z-index: 3; }
+      z-index: 3;
+      top: 41%; }
     .seat__groups .seat__info .seat__info--select {
-      width: 45px;
-      height: 45px;
+      width: 40px;
+      height: 40px;
       position: absolute;
       left: -80%;
       background-color: #5090e9;
-      z-index: 3; }
+      z-index: 3;
+      top: 72%; }
 
 .seat__select {
-  background: #5090e9 !important; }
+  background: #5090e9 !important;
+  border: none !important; }
 
 .seat__unSelect {
   background: white; }
+
+.seat__selecting {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  color: #981a1e; }
+  .seat__selecting .seat__selecting--item {
+    padding-right: 7px; }
 
 .trip .trip__item {
   margin-left: 50px; }

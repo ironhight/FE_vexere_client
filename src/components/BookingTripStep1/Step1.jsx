@@ -179,9 +179,9 @@ class ContentStep1 extends Component {
     // console.log("ContentStep1 -> render -> trips", trips.seats);
     // console.log("ContentStep1 -> render -> trips", trips)
     // const isEmpty = _.isEmpty(stations);
-    // console.log("run render Step1");
+    console.log("run render Step1");
     // let test;
-    // console.log("object", this.state.seatBook);
+    console.log("object", this.state.seatBook);
     return (
       <div className="container">
         <BodyWrapper>
@@ -222,15 +222,32 @@ class ContentStep1 extends Component {
 
                 <div style={{ flexBasis: "35%" }}>
                   <p>Ghế</p>
-                  <div className="seat__select"></div>
+                  <div className="seat__selecting">
+                    {this.state.seatBook.map((item, index) => (
+                      <div className="seat__selecting--item">
+                        {item}
+
+                        {index < this.state.seatBook.length - 1 ? (
+                          <span className="seat__com">{","}</span>
+                        ) : null}
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 <div style={{ flexBasis: "30%" }}>
                   <p>Tổng cộng</p>
 
-                  <Price priceFont="30px" className="flex-grow-1">
-                    {`${trips.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
-                    <sup>vnd</sup>
+                  <Price priceFont="25px" className="flex-grow-1">
+                    {this.state.seatBook.length > 0
+                      ? `${trips.price *
+                          this.state.seatBook.length} 000`.replace(
+                          /\B(?=(\d{3})+(?!\d))/g,
+                          ","
+                        )
+                      : 0}
+
+                    <sup style={{ paddingLeft: "5px" }}>vnd</sup>
                   </Price>
                 </div>
               </div>
