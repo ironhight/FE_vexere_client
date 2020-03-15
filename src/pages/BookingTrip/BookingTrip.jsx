@@ -93,14 +93,6 @@ class BookingTrip extends Component {
   }
 }
 
-// const mapStatetoProps = state => {
-//   return {
-//     user: state.Authenticate,
-//     trips: state.trips,
-//     stations: state.stations
-//   };
-// };
-
 const mapDispatchToProps = dispatch => {
   return {
     getTripByID: id => {

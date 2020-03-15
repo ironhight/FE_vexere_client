@@ -12,33 +12,35 @@ import { Price } from "./styled";
 import { Wrapper, BodyWrapper } from "../../styled";
 import { connect } from "react-redux";
 
+import * as seatActions from "../../redux/actions/seats.action";
+
 class ContentStep1 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      seatBook: []
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     seatBook: []
+  //   };
+  // }
 
-  changeColor = (seatCode, isBooked) => {
-    if (isBooked === false) {
-      let index = this.state.seatBook.findIndex(item => item === seatCode);
-      index === -1
-        ? this.state.seatBook.push(seatCode)
-        : this.state.seatBook.splice(index, 1);
-    }
+  // changeColor = (seatCode, isBooked) => {
+  //   if (isBooked === false) {
+  //     let index = this.state.seatBook.findIndex(item => item === seatCode);
+  //     index === -1
+  //       ? this.state.seatBook.push(seatCode)
+  //       : this.state.seatBook.splice(index, 1);
+  //   }
 
-    this.setState({
-      seatBook: this.state.seatBook
-    });
-    console.log("ContentStep1 -> getCode", this.state.getCode);
-    console.log("ContentStep1 -> this.state.seatBook", this.state.seatBook);
-  };
+  //   this.setState({
+  //     seatBook: this.state.seatBook
+  //   });
+  //   // console.log("ContentStep1 -> getCode", this.state.getCode);
+  //   // console.log("ContentStep1 -> this.state.seatBook", this.state.seatBook);
+  // };
 
-  renderSeats = tripData => {
-    console.log("ContentStep1 -> tripData!!!!!!!", tripData.seats);
-    const { getCode } = this.state;
-    console.log("ContentStep1 -> getCode", getCode);
+  renderSeats = (tripData, seatBook) => {
+    // console.log("ContentStep1 -> tripData!!!!!!!", tripData.seats);
+    // const { getCode } = this.state;
+    // console.log("ContentStep1 -> getCode", getCode);
     let choose;
 
     return (
@@ -82,7 +84,7 @@ class ContentStep1 extends Component {
                     {_.get(tripData, "seats", [])
                       .slice(0, 12)
                       .map((s, index) => {
-                        this.state.seatBook.includes(s.code)
+                        seatBook.includes(s.code)
                           ? (choose = "seat__select")
                           : (choose = "seat_unSelect");
 
@@ -103,7 +105,7 @@ class ContentStep1 extends Component {
                                 cursor: `${s.isBooked ? "no-drop" : "pointer"}`
                               }}
                               onClick={() => {
-                                this.changeColor(s.code, s.isBooked);
+                                this.props.getSeatsSelect(s.code, s.isBooked);
                               }}
                             >
                               {s.code}
@@ -131,7 +133,7 @@ class ContentStep1 extends Component {
                     {_.get(tripData, "seats", [])
                       .slice(12, 24)
                       .map((s, index) => {
-                        this.state.seatBook.includes(s.code)
+                        seatBook.includes(s.code)
                           ? (choose = "seat__select")
                           : (choose = "seat_unSelect");
                         return (
@@ -151,7 +153,7 @@ class ContentStep1 extends Component {
                                 cursor: `${s.isBooked ? "no-drop" : "pointer"}`
                               }}
                               onClick={() => {
-                                this.changeColor(s.code, s.isBooked);
+                                this.props.getSeatsSelect(s.code, s.isBooked);
                               }}
                             >
                               {s.code}
@@ -171,17 +173,19 @@ class ContentStep1 extends Component {
 
   render() {
     const { stations, trips } = this.props;
+    const { seatsBook } = this.props;
+    let seatBook = seatsBook.seatBook;
     // console.log("ContentStep1 -> render -> trips", trips);
     // let tripsData = trips.trips;
     // console.log("ContentStep1 -> render -> tripsData??????", tripsData);
-    // console.log("dadsfadsf", this.state.seatBook);
+    // console.log("dadsfadsf", seatBook.seatBook);
     // console.log("ContentStep1 -> render -> stations", stations);
     // console.log("ContentStep1 -> render -> trips", trips.seats);
     // console.log("ContentStep1 -> render -> trips", trips)
     // const isEmpty = _.isEmpty(stations);
     console.log("run render Step1");
     // let test;
-    console.log("object", this.state.seatBook);
+    // console.log("object", this.state.seatBook);
     return (
       <div className="container">
         <BodyWrapper>
@@ -223,11 +227,11 @@ class ContentStep1 extends Component {
                 <div style={{ flexBasis: "35%" }}>
                   <p>Ghế</p>
                   <div className="seat__selecting">
-                    {this.state.seatBook.map((item, index) => (
+                    {seatBook.map((item, index) => (
                       <div className="seat__selecting--item">
                         {item}
 
-                        {index < this.state.seatBook.length - 1 ? (
+                        {index < seatBook.length - 1 ? (
                           <span className="seat__com">{","}</span>
                         ) : null}
                       </div>
@@ -239,9 +243,8 @@ class ContentStep1 extends Component {
                   <p>Tổng cộng</p>
 
                   <Price priceFont="25px" className="flex-grow-1">
-                    {this.state.seatBook.length > 0
-                      ? `${trips.price *
-                          this.state.seatBook.length} 000`.replace(
+                    {seatBook.length > 0
+                      ? `${trips.price * seatBook.length} 000`.replace(
                           /\B(?=(\d{3})+(?!\d))/g,
                           ","
                         )
@@ -255,7 +258,7 @@ class ContentStep1 extends Component {
           </Wrapper>
         </BodyWrapper>
 
-        {this.renderSeats(trips)}
+        {this.renderSeats(trips, seatBook)}
       </div>
     );
   }
@@ -265,8 +268,16 @@ const mapStateToProps = state => {
   return {
     user: state.Authenticate,
     stations: state.stations,
-    trips: state.trips
+    trips: state.trips,
+    seatsBook: state.seatsReducers
   };
 };
 
-export default connect(mapStateToProps, null)(ContentStep1);
+const mapDispatchToProps = dispatch => {
+  return {
+    getSeatsSelect: (seatCode, isBooked) => {
+      dispatch(seatActions.seatsSelect(seatCode, isBooked));
+    }
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ContentStep1);
