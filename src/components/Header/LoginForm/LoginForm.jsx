@@ -21,7 +21,7 @@ class LoginForm extends PureComponent {
       loginModal,
       registerModal,
       handleSubmit,
-      isSubmitting
+      isSubmitting,
     } = this.props;
 
     return (
@@ -33,13 +33,7 @@ class LoginForm extends PureComponent {
       >
         <Spin spinning={isSubmitting} tip="Loading...">
           <form onSubmit={handleSubmit}>
-            {formInput(
-              touched.email,
-              errors.email,
-              "email",
-              "Email",
-              <MailOutlined />
-            )}
+            {formInput(touched.email, errors.email, "email", "Email", <MailOutlined />)}
             {formInput(
               touched.password,
               errors.password,
@@ -50,10 +44,7 @@ class LoginForm extends PureComponent {
             )}
             <div className="input-group text-center mb-3 justify-content-center">
               Are you member?
-              <span
-                className="text-primary ml-1 cursor-point"
-                onClick={() => registerModal(true)}
-              >
+              <span className="text-primary ml-1 cursor-point" onClick={() => registerModal(true)}>
                 Register
               </span>
             </div>
@@ -73,29 +64,22 @@ const withFormikHOC = withFormik({
   mapPropsToValues() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   },
 
   validationSchema: object().shape({
-    email: string()
-      .required("Email is required")
-      .email("Email is invalid"),
+    email: string().required("Email is required").email("Email is invalid"),
     password: string()
       .required("Password is required")
-      .min(3, "Password must have min 3 characters")
+      .min(3, "Password must have min 3 characters"),
   }),
 
-  handleSubmit: (
-    values,
-    { resetForm, setFieldValue, setFieldError, props, setSubmitting }
-  ) => {
+  handleSubmit: (values, { resetForm, setFieldValue, setFieldError, props, setSubmitting }) => {
     setFieldValue("spinning", true);
-    // console.log("TCL: ...Object.values(values)", );
     api
       .post(`users/login`, values)
-      .then(res => {
-        // console.log("TCL: res.data.token", res.data.token);
+      .then((res) => {
         setSubmitting(false);
         setAuthToken(res.data.token);
         resetForm();
@@ -108,31 +92,31 @@ const withFormikHOC = withFormik({
           showConfirmButton: false,
           timer: 4000,
           timerProgressBar: true,
-          onOpen: toast => {
+          onOpen: (toast) => {
             toast.addEventListener("mouseenter", Swal.stopTimer);
             toast.addEventListener("mouseleave", Swal.resumeTimer);
-          }
+          },
         });
 
         Toast.fire({
           icon: "success",
           title: "Signed in successfully",
-          footer: `Welcome ${jwtDecode(res.data.token).fullName}`
+          footer: `Welcome ${jwtDecode(res.data.token).fullName}`,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         setSubmitting(false);
         setFieldError("email", err.response.data);
         setFieldError("password", err.response.data);
       });
-  }
+  },
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    authLogin: payload => {
+    authLogin: (payload) => {
       dispatch(authLogin(payload));
-    }
+    },
   };
 };
 
