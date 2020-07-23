@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { Skeleton, Row, Col } from "antd";
-import {
-  CarOutlined,
-  ArrowRightOutlined,
-  CalendarOutlined
-} from "@ant-design/icons";
+import { CarOutlined, ArrowRightOutlined, CalendarOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import moment from "moment";
 
@@ -78,7 +74,7 @@ class ContentStep1 extends Component {
                       width: "200px",
                       backgroundColor: "#E6E6E6",
                       padding: "20px 10px 10px 10px",
-                      borderRadius: "18px 18px 5px 5px"
+                      borderRadius: "18px 18px 5px 5px",
                     }}
                   >
                     {_.get(tripData, "seats", [])
@@ -93,16 +89,12 @@ class ContentStep1 extends Component {
                             <div
                               className={`seat ${choose}`}
                               style={{
-                                background: `${
-                                  s.isBooked ? "#767676" : "white"
-                                }`,
-                                border: `${
-                                  s.isBooked ? "#E6E6E6" : "1px solid red"
-                                }`,
+                                background: `${s.isBooked ? "#767676" : "white"}`,
+                                border: `${s.isBooked ? "#E6E6E6" : "1px solid red"}`,
                                 width: "50px",
                                 margin: "5px",
                                 height: "50px",
-                                cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                                cursor: `${s.isBooked ? "no-drop" : "pointer"}`,
                               }}
                               onClick={() => {
                                 this.props.getSeatsSelect(s.code, s.isBooked);
@@ -127,7 +119,7 @@ class ContentStep1 extends Component {
                       backgroundColor: "#E6E6E6",
                       padding: "20px 10px 10px 10px",
                       borderRadius: "18px 18px 5px 5px",
-                      marginLeft: "18px"
+                      marginLeft: "18px",
                     }}
                   >
                     {_.get(tripData, "seats", [])
@@ -141,16 +133,12 @@ class ContentStep1 extends Component {
                             <div
                               className={`seat ${choose}`}
                               style={{
-                                background: `${
-                                  s.isBooked ? "#767676" : "white"
-                                }`,
-                                border: `${
-                                  s.isBooked ? "#E6E6E6" : "1px solid red"
-                                }`,
+                                background: `${s.isBooked ? "#767676" : "white"}`,
+                                border: `${s.isBooked ? "#E6E6E6" : "1px solid red"}`,
                                 width: "50px",
                                 margin: "5px",
                                 height: "50px",
-                                cursor: `${s.isBooked ? "no-drop" : "pointer"}`
+                                cursor: `${s.isBooked ? "no-drop" : "pointer"}`,
                               }}
                               onClick={() => {
                                 this.props.getSeatsSelect(s.code, s.isBooked);
@@ -172,20 +160,11 @@ class ContentStep1 extends Component {
   };
 
   render() {
-    const { stations, trips } = this.props;
+    const { trips } = this.props;
+    console.log("ContentStep1 -> render -> trips", trips);
     const { seatsBook } = this.props;
     let seatBook = seatsBook.seatBook;
-    // console.log("ContentStep1 -> render -> trips", trips);
-    // let tripsData = trips.trips;
-    // console.log("ContentStep1 -> render -> tripsData??????", tripsData);
-    // console.log("dadsfadsf", seatBook.seatBook);
-    // console.log("ContentStep1 -> render -> stations", stations);
-    // console.log("ContentStep1 -> render -> trips", trips.seats);
-    // console.log("ContentStep1 -> render -> trips", trips)
-    // const isEmpty = _.isEmpty(stations);
-    console.log("run render Step1");
-    // let test;
-    // console.log("object", this.state.seatBook);
+
     return (
       <div className="container">
         <BodyWrapper>
@@ -197,26 +176,10 @@ class ContentStep1 extends Component {
               <div className="d-flex">
                 <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
                   <div className="d-flex align-items-center mb-1">
-                    {!_.isEmpty(stations) && !_.isEmpty(trips)
-                      ? _.get(
-                          _.find(stations, {
-                            _id: trips.fromStation
-                          }),
-                          "name",
-                          []
-                        )
-                      : console.log("ERROR")}
+                    {!_.isEmpty(trips) ? trips.fromStation.name : console.log("ERROR")}
 
                     <ArrowRightOutlined className="mx-2" />
-                    {!_.isEmpty(stations) && !_.isEmpty(trips)
-                      ? _.get(
-                          _.find(stations, {
-                            _id: trips.toStation
-                          }),
-                          "name",
-                          []
-                        )
-                      : console.log("ERROR")}
+                    {!_.isEmpty(trips) ? trips.toStation.name : console.log("ERROR")}
                   </div>
                   <div className="d-flex align-items-center">
                     <CalendarOutlined className="mr-1" />
@@ -244,10 +207,7 @@ class ContentStep1 extends Component {
 
                   <Price priceFont="25px" className="flex-grow-1">
                     {seatBook.length > 0
-                      ? `${trips.price * seatBook.length} 000`.replace(
-                          /\B(?=(\d{3})+(?!\d))/g,
-                          ","
-                        )
+                      ? `${trips.price * seatBook.length} 000`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                       : 0}
 
                     <sup style={{ paddingLeft: "5px" }}>vnd</sup>
@@ -264,20 +224,19 @@ class ContentStep1 extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.Authenticate,
-    stations: state.stations,
     trips: state.trips,
-    seatsBook: state.seatsReducers
+    seatsBook: state.seatsReducers,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getSeatsSelect: (seatCode, isBooked) => {
       dispatch(seatActions.seatsSelect(seatCode, isBooked));
-    }
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ContentStep1);

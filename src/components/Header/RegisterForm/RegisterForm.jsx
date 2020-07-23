@@ -1,11 +1,6 @@
 import React, { PureComponent } from "react";
 import { ModalCustom } from "../styled";
-import {
-  MailOutlined,
-  UserOutlined,
-  LockOutlined,
-  PhoneOutlined
-} from "@ant-design/icons";
+import { MailOutlined, UserOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
 import { object, string, ref } from "yup";
 import { withFormik, Field } from "formik";
 import { Form, Button, DatePicker, Spin } from "antd";
@@ -25,7 +20,7 @@ class RegisterForm extends PureComponent {
       registerModal,
       handleSubmit,
       setFieldValue,
-      isSubmitting
+      isSubmitting,
     } = this.props;
 
     return (
@@ -35,10 +30,7 @@ class RegisterForm extends PureComponent {
             <h3 className="modal-title text-center">Register</h3>
             <p className="text-center mb-0">
               Do you have account?{" "}
-              <span
-                className="cursor-point text-primary"
-                onClick={() => loginModal(true)}
-              >
+              <span className="cursor-point text-primary" onClick={() => loginModal(true)}>
                 Login
               </span>
             </p>
@@ -50,13 +42,7 @@ class RegisterForm extends PureComponent {
       >
         <Spin spinning={isSubmitting} tip="Loading...">
           <form onSubmit={handleSubmit}>
-            {formInput(
-              touched.email,
-              errors.email,
-              "email",
-              "Email",
-              <MailOutlined />
-            )}
+            {formInput(touched.email, errors.email, "email", "Email", <MailOutlined />)}
 
             {formInput(
               touched.fullName,
@@ -99,9 +85,7 @@ class RegisterForm extends PureComponent {
               </div>
               <div className="col-6">
                 <FormItem
-                  validateStatus={
-                    touched.dayOfBirth && errors.dayOfBirth && "error"
-                  }
+                  validateStatus={touched.dayOfBirth && errors.dayOfBirth && "error"}
                   help={touched.dayOfBirth && errors.dayOfBirth}
                 >
                   <label className="mb-0">Date of birth</label>
@@ -138,13 +122,11 @@ const withFormikHOC = withFormik({
       password: "",
       password2: "",
       phoneNumber: "",
-      dayOfBirth: ""
+      dayOfBirth: "",
     };
   },
   validationSchema: object().shape({
-    email: string()
-      .required("Email is required")
-      .email("Email is invalid"),
+    email: string().required("Email is required").email("Email is invalid"),
     fullName: string().required("Full name is required"),
     password: string()
       .required("Password is required")
@@ -153,40 +135,37 @@ const withFormikHOC = withFormik({
       .required("Verify password is required")
       .oneOf([ref("password"), null], "Passwords must match"),
     phoneNumber: string().required("Phone number is required"),
-    dayOfBirth: string().required("Date of birth is required")
+    dayOfBirth: string().required("Date of birth is required"),
   }),
-  handleSubmit: (
-    values,
-    { resetForm, props, setFieldError, setSubmitting }
-  ) => {
+  handleSubmit: (values, { resetForm, props, setFieldError, setSubmitting }) => {
     api
       .post(`/users`, values)
-      .then(res => {
+      .then((res) => {
         console.log("thanhcong");
         setSubmitting(false);
         swal({
-          text: res.data.statusText,
+          text: "Create new user successfully!",
           icon: "success",
           buttons: false,
-          timer: 1500
+          timer: 1500,
         }).then(() => {
           resetForm();
           props.registerModal(false);
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("errs");
         setSubmitting(false);
         swal({
           text: "Some error has occurred!",
           icon: "error",
           buttons: false,
-          timer: 1500
+          timer: 1500,
         });
         setFieldError("email", err.response.data.email);
         setFieldError("phoneNumber", err.response.data.phoneNumber);
       });
-  }
+  },
 });
 
 export default withFormikHOC(RegisterForm);
