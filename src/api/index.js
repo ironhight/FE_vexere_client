@@ -2,7 +2,7 @@ import axios from "axios";
 
 let baseURL;
 
-switch (process.env.NODE_ENV) {
+switch (process.env.REACT_ENV) {
   case "dev":
     baseURL = "http://localhost:6789/api";
     break;
