@@ -8,7 +8,7 @@ switch (process.env.NODE_ENV) {
     break;
 
   case "staging":
-    baseURL = "https://fs07-vexere-client-nam.herokuapp.com/";
+    baseURL = "https://fs07-vexere-nam.herokuapp.com";
     break;
 
   default:
