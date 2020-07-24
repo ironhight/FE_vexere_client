@@ -2,6 +2,12 @@
   "name": "vexere-client",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "npm": "6.14.5",
+    "node": "12.18.1"
+  },
+  "author": "ironhight",
+  "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
@@ -34,7 +40,8 @@
     "yup": "^0.28.1"
   },
   "scripts": {
-    "start": "set PORT=2468 && react-scripts start",
+    "start": "react-scripts start",
+    "start:dev": "set REACT_ENV=dev& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
