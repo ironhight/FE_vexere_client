@@ -1,6 +1,7 @@
 {
   "name": "vexere-client",
   "version": "0.1.0",
+  "description": "project vexere for client",
   "private": true,
   "author": "ironhight",
   "license": "ISC",
@@ -39,7 +40,8 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start:dev": "set REACT_ENV=dev& react-scripts start",
+    "start:dev": "set REACT_APP_NODE_ENV=dev& react-scripts start",
+    "start:stag": "set REACT_APP_NODE_ENV=stag& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

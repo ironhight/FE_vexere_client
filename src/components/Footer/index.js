@@ -7,7 +7,7 @@ const Footer = () => {
       <footer>
         <FooterBg>
           <div className="content">
-            <h2>Nguyen Hoai Nam</h2>
+            <h2>Hoai Nam Nguyen</h2>
             <p className="mb-0">Project Vexere</p>
           </div>
         </FooterBg>
@@ -15,10 +15,14 @@ const Footer = () => {
           <div className="container">
             <ul className="clearfix">
               <li>
-                <a href="#">LinkedIn</a>
+                <a href="/" target="_blank">
+                  LinkedIn
+                </a>
               </li>
               <li>
-                <a href="#">Github</a>
+                <a href="/" target="_blank">
+                  Github
+                </a>
               </li>
             </ul>
           </div>

@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import { DatePickerCustom, ButtonCustom } from "../styled";
 import { Select, Form, Col, Row } from "antd";
-import { EnvironmentOutlined, CarOutlined } from "@ant-design/icons";
-import { Formik } from "formik";
-import { object, string } from "yup";
-import _ from "lodash";
-import queryString from "query-string";
+import { EnvironmentOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
-// import { searchTrips } from "../../../redux/actions/trips";
 import * as stationActions from "../../../redux/actions/stations";
 import { withRouter } from "react-router-dom";
 
 import moment from "moment";
 
 const FormItem = Form.Item;
-const { Option } = Select;
 
 class BookingForm extends Component {
   componentDidMount() {
@@ -30,7 +24,7 @@ class BookingForm extends Component {
             textAlign: "center",
             color: "white",
             marginBottom: "22px",
-            fontSize: "34px"
+            fontSize: "34px",
           }}
         >
           VeXeRe.com - Hệ thống đặt vé xe khách lớn nhất Việt Nam
@@ -45,9 +39,7 @@ class BookingForm extends Component {
                 placeholder="Select location"
                 optionFilterProp="children"
                 value={stations.locationFrom}
-                suffixIcon={
-                  <EnvironmentOutlined style={{ color: "#28a745" }} />
-                }
+                suffixIcon={<EnvironmentOutlined style={{ color: "#28a745" }} />}
               ></Select>
             </FormItem>
           </Col>
@@ -60,9 +52,7 @@ class BookingForm extends Component {
                 value={stations.locationTo}
                 placeholder="Select location"
                 optionFilterProp="children"
-                suffixIcon={
-                  <EnvironmentOutlined style={{ color: "#dc3545" }} />
-                }
+                suffixIcon={<EnvironmentOutlined style={{ color: "#dc3545" }} />}
               ></Select>
             </FormItem>
           </Col>
@@ -74,19 +64,14 @@ class BookingForm extends Component {
                 format="DD/MM/YYYY"
                 name="startTime"
                 value={stations.startTime}
-                disabledDate={current => {
+                disabledDate={(current) => {
                   return current && current <= moment().endOf("day");
                 }}
               />
             </FormItem>
           </Col>
           <Col span={4}>
-            <ButtonCustom
-              size="large"
-              block
-              htmlType="submit"
-              className="btn--search"
-            >
+            <ButtonCustom size="large" block htmlType="submit" className="btn--search">
               TÌM VÉ XE
             </ButtonCustom>
           </Col>
@@ -96,20 +81,18 @@ class BookingForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    stations: state.stations
+    stations: state.stations,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getStations: () => {
       dispatch(stationActions.getStations);
-    }
+    },
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(BookingForm)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BookingForm));

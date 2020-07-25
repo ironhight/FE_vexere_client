@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { ModalCustom } from "../styled";
 import { MailOutlined, UserOutlined, LockOutlined, PhoneOutlined } from "@ant-design/icons";
 import { object, string, ref } from "yup";
-import { withFormik, Field } from "formik";
+import { withFormik } from "formik";
 import { Form, Button, DatePicker, Spin } from "antd";
 import formInput from "../../../utils/formInput";
 import swal from "sweetalert";

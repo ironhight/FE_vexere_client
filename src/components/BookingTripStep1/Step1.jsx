@@ -176,10 +176,14 @@ class ContentStep1 extends Component {
               <div className="d-flex">
                 <div className="flex-grow-1" style={{ flexBasis: "35%" }}>
                   <div className="d-flex align-items-center mb-1">
-                    {!_.isEmpty(trips) ? trips.fromStation.name : console.log("ERROR")}
+                    {!_.isEmpty(trips) && trips.fromStation
+                      ? trips.fromStation.name
+                      : console.log("ERROR")}
 
                     <ArrowRightOutlined className="mx-2" />
-                    {!_.isEmpty(trips) ? trips.toStation.name : console.log("ERROR")}
+                    {!_.isEmpty(trips) && trips.toStation
+                      ? trips.toStation.name
+                      : console.log("ERROR")}
                   </div>
                   <div className="d-flex align-items-center">
                     <CalendarOutlined className="mr-1" />
