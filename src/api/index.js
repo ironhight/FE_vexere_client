@@ -1,12 +1,12 @@
 import axios from "axios";
 let baseURL;
 
-switch (process.env.REACT_APP_NODE_ENV) {
+switch (process.env.NODE_ENV) {
   case "dev":
     baseURL = "http://localhost:6789/api";
     break;
 
-  case "stag":
+  case "production":
     baseURL = "https://fs07-vexere-nam.herokuapp.com/api";
     break;
 
