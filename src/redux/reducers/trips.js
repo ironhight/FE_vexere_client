@@ -8,9 +8,10 @@ const tripsReducers = (state = initialState, action) => {
       return action.payload;
 
     case types.GET_DETAIL_TRIP:
-      console.log("tripsReducers ->  action.payload", action.payload);
       return action.payload;
 
+    case types.SEARCH_TRIPS:
+      return action.payload;
     default:
       return state;
   }

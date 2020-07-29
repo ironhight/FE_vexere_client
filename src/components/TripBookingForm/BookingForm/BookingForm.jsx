@@ -4,19 +4,47 @@ import { Select, Form, Col, Row } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import * as stationActions from "../../../redux/actions/stations";
+import * as tripsActions from "../../../redux/actions/trips";
 import { withRouter } from "react-router-dom";
 
 import moment from "moment";
+import { provinces } from "../../../mock/provinces";
 
 const FormItem = Form.Item;
-
+const { Option } = Select;
 class BookingForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fromProvince: "",
+      toProvince: "",
+      startTime: "",
+    };
+  }
   componentDidMount() {
     this.props.getStations();
   }
 
+  handleChangeFrom = (value) => {
+    this.setState({ fromProvince: value });
+  };
+
+  handleChangeTo = (value) => {
+    this.setState({ toProvince: value });
+  };
+
+  handleChangeDate = (value, date) => {
+    this.setState({ startTime: date });
+  };
+
+  handleSubmit = () => {
+    const { fromProvince, toProvince, startTime } = this.state;
+    this.props.searchTrips(fromProvince, toProvince, startTime);
+  };
+
   render() {
     const { stations } = this.props;
+    console.log(this.state.fromProvince);
     return (
       <div>
         <h2
@@ -38,9 +66,13 @@ class BookingForm extends Component {
                 showSearch
                 placeholder="Select location"
                 optionFilterProp="children"
-                value={stations.locationFrom}
+                onChange={this.handleChangeFrom}
                 suffixIcon={<EnvironmentOutlined style={{ color: "#28a745" }} />}
-              ></Select>
+              >
+                {provinces.map((province) => {
+                  return <Option value={province}>{province}</Option>;
+                })}
+              </Select>
             </FormItem>
           </Col>
           <Col span={8}>
@@ -49,11 +81,15 @@ class BookingForm extends Component {
                 name="locationTo"
                 size="large"
                 showSearch
-                value={stations.locationTo}
+                onChange={this.handleChangeTo}
                 placeholder="Select location"
                 optionFilterProp="children"
                 suffixIcon={<EnvironmentOutlined style={{ color: "#dc3545" }} />}
-              ></Select>
+              >
+                {provinces.map((province) => {
+                  return <Option value={province}>{province}</Option>;
+                })}
+              </Select>
             </FormItem>
           </Col>
           <Col span={4}>
@@ -61,9 +97,8 @@ class BookingForm extends Component {
               <DatePickerCustom
                 allowClear={false}
                 size="large"
-                format="DD/MM/YYYY"
                 name="startTime"
-                value={stations.startTime}
+                onChange={this.handleChangeDate}
                 disabledDate={(current) => {
                   return current && current <= moment().endOf("day");
                 }}
@@ -71,7 +106,13 @@ class BookingForm extends Component {
             </FormItem>
           </Col>
           <Col span={4}>
-            <ButtonCustom size="large" block htmlType="submit" className="btn--search">
+            <ButtonCustom
+              size="large"
+              block
+              htmlType="submit"
+              className="btn--search"
+              onClick={() => this.handleSubmit()}
+            >
               TÌM VÉ XE
             </ButtonCustom>
           </Col>
@@ -91,6 +132,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getStations: () => {
       dispatch(stationActions.getStations);
+    },
+    searchTrips: (from, to, time) => {
+      dispatch(tripsActions.searchTrips(from, to, time));
     },
   };
 };

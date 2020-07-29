@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start:dev": "set NODE_ENV=dev& react-scripts start",
+    "dev": "set NODE_ENV=development& react-scripts start",
     "start:stag": "set NODE_ENV=production& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

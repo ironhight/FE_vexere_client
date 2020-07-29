@@ -2,7 +2,7 @@ import axios from "axios";
 let baseURL;
 
 switch (process.env.NODE_ENV) {
-  case "dev":
+  case "development":
     baseURL = "http://localhost:6789/api";
     break;
 
