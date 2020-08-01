@@ -1,42 +1,23 @@
 import HomePage from "./pages/HomePage/HomePage";
 import BookingTrip from "./pages/BookingTrip/BookingTrip";
+import InfomationSearch from "./components/TripBookingForm/BookingForm/InfomationSearch";
 
 const routesHome = [
   {
     path: "/",
     exact: true,
-    component: HomePage
+    component: HomePage,
   },
   {
     path: "/booking-trip/:id",
     exact: true,
-    component: BookingTrip
-  }
-  //   {
-  //     path: "/detail-movie/:id",
-  //     exact: false,
-  //     component: DetailMovie
-  //   },
-  //   {
-  //     path: "/theatres",
-  //     exact: false,
-  //     component: Theatres
-  //   },
-  //   {
-  //     path: "/seat/:maLichChieu",
-  //     exact: false,
-  //     component: Seat
-  //   },
-  //   {
-  //     path: "/sign-in",
-  //     exact: false,
-  //     component: SignIn
-  //   },
-  //   {
-  //     path: "/sign-up",
-  //     exact: false,
-  //     component: SignUp
-  //   }
+    component: BookingTrip,
+  },
+  {
+    path: "/search-trip",
+    exact: false,
+    component: InfomationSearch,
+  },
 ];
 
 export { routesHome };

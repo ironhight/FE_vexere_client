@@ -40,6 +40,7 @@ class BookingForm extends Component {
   handleSubmit = () => {
     const { fromProvince, toProvince, startTime } = this.state;
     this.props.searchTrips(fromProvince, toProvince, startTime);
+    this.props.history.push(`/search-trip`);
   };
 
   render() {
