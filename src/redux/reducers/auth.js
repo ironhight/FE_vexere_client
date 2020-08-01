@@ -4,17 +4,16 @@ import setAuthToken from "../../utils/setAuthToken";
 
 let initialState = {
   user: {},
-  isAuthenticated: false
+  isAuthenticated: false,
 };
 
 const user =
-  (localStorage.getItem("auth") && jwtDecode(localStorage.getItem("auth"))) ||
-  {};
+  (localStorage.getItem("Authorization") && jwtDecode(localStorage.getItem("Authorization"))) || {};
 if (user) {
   if (Date.now() / 1000 <= user.exp) {
     initialState = {
       user: user,
-      isAuthenticated: true
+      isAuthenticated: true,
     };
   }
 }
@@ -22,18 +21,18 @@ if (user) {
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.AUTH_LOGIN:
-      localStorage.setItem("auth", action.payload);
+      localStorage.setItem("Authorization", action.payload);
       return {
         user: jwtDecode(action.payload),
-        isAuthenticated: true
+        isAuthenticated: true,
       };
 
     case types.AUTH_LOGOUT:
-      localStorage.removeItem("auth");
+      localStorage.removeItem("Authorization");
       setAuthToken();
       return {
         user: {},
-        isAuthenticated: false
+        isAuthenticated: false,
       };
 
     default:
