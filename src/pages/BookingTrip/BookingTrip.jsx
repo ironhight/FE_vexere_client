@@ -7,6 +7,9 @@ import * as usersAction from "../../redux/actions/users.action";
 import { Steps, Button, message } from "antd";
 import { StyledStep } from "./styled";
 import ContentStep1 from "../../components/BookingTripStep1/Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import api from "../../api";
 
 const { Step } = Steps;
 
@@ -34,10 +37,22 @@ class BookingTrip extends Component {
     this.setState({ current });
   }
 
+  async handleSubmit() {
+    const { seats, trip } = this.props;
+    try {
+      const res = await api.post("/tickets/booking", {
+        tripId: trip._id,
+        seatCodes: seats?.seatBook,
+      });
+      message.success("Đặt vé thành công");
+    } catch (error) {
+      console.error(error);
+      message.error("Lỗi hệ thống!");
+    }
+  }
+
   render() {
-    console.log(this.props.user);
     const { current } = this.state;
-    console.log("Run render BookingTrip");
     const steps = [
       {
         title: "Chọn ghế",
@@ -45,11 +60,11 @@ class BookingTrip extends Component {
       },
       {
         title: "Thanh toán",
-        content: "Second-content",
+        content: <Step2 />,
       },
       {
         title: "Xác nhận",
-        content: "Last-content",
+        content: <Step3 />,
       },
     ];
 
@@ -69,7 +84,7 @@ class BookingTrip extends Component {
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button type="primary" onClick={() => message.success("Processing complete!")}>
+              <Button type="primary" onClick={() => this.handleSubmit()}>
                 Done
               </Button>
             )}
@@ -89,6 +104,8 @@ const mapStateToProps = (state) => {
   return {
     auth: state.Authenticate,
     user: state.usersReducer,
+    trip: state.trips,
+    seats: state.seatsReducers,
   };
 };
 
