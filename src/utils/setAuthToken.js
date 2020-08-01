@@ -1,10 +1,10 @@
 import api from "../api/index";
 
-const setAuthToken = token => {
+const setAuthToken = (token) => {
   if (token) {
-    api.defaults.headers.common["token"] = token;
+    api.defaults.headers.common["Authorization"] = token;
   } else {
-    delete api.defaults.headers.common["token"];
+    delete api.defaults.headers.common["Authorization"];
   }
 };
 export default setAuthToken;
