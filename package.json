@@ -7,6 +7,7 @@
   "license": "ISC",
   "main": "index.js",
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
     "@sweetalert/with-react": "^0.1.1",
@@ -40,7 +41,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "start:dev": "set NODE_ENV=dev& react-scripts start",
+    "dev": "set NODE_ENV=development& react-scripts start",
     "start:stag": "set NODE_ENV=production& react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

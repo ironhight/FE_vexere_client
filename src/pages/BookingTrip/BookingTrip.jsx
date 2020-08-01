@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import _ from "lodash";
-// import { getDetailTrip } from "../../redux/actions/trips";
-// import { getStations } from "../../redux/actions/stations";
-
 import * as tripActions from "../../redux/actions/trips";
 import * as stationActions from "../../redux/actions/stations";
+import * as usersAction from "../../redux/actions/users.action";
 
 import { Steps, Button, message } from "antd";
 import { StyledStep } from "./styled";
@@ -16,17 +13,15 @@ const { Step } = Steps;
 class BookingTrip extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      current: 0
-    };
+    this.state = { current: 0 };
   }
 
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
-    // console.log("BookingTrip -> componentDidMount -> id", id);
     this.props.getTripByID(id);
     this.props.getStations();
+    this.props.getProfile();
   }
 
   next() {
@@ -40,28 +35,28 @@ class BookingTrip extends Component {
   }
 
   render() {
-    // const { stations, trips } = this.props;
+    console.log(this.props.user);
     const { current } = this.state;
     console.log("Run render BookingTrip");
     const steps = [
       {
         title: "Chọn ghế",
-        content: <ContentStep1 />
+        content: <ContentStep1 />,
       },
       {
         title: "Thanh toán",
-        content: "Second-content"
+        content: "Second-content",
       },
       {
         title: "Xác nhận",
-        content: "Last-content"
-      }
+        content: "Last-content",
+      },
     ];
 
     return (
       <div className="container" style={{ margin: "20px auto" }}>
         <Steps current={current}>
-          {steps.map(item => (
+          {steps.map((item) => (
             <Step key={item.title} title={item.title} />
           ))}
         </Steps>
@@ -74,10 +69,7 @@ class BookingTrip extends Component {
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button
-                type="primary"
-                onClick={() => message.success("Processing complete!")}
-              >
+              <Button type="primary" onClick={() => message.success("Processing complete!")}>
                 Done
               </Button>
             )}
@@ -93,15 +85,25 @@ class BookingTrip extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = (state) => {
   return {
-    getTripByID: id => {
+    auth: state.Authenticate,
+    user: state.usersReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getTripByID: (id) => {
       dispatch(tripActions.getDetailTrip(id));
     },
     getStations: () => {
       dispatch(stationActions.getStations());
-    }
+    },
+    getProfile: () => {
+      dispatch(usersAction.getProfileAdmin());
+    },
   };
 };
 
-export default connect(null, mapDispatchToProps)(BookingTrip);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingTrip);
