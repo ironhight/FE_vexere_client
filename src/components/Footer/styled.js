@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import FooterImg from "../../assets/images/footer-bg.jpg";
 
 export const FooterBg = styled.div`
-  background-image: url(${FooterImg});
+  background-image: url(http://d3q2hmjnptzwta.cloudfront.net/footer-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom center;

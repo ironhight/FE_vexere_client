@@ -6,6 +6,8 @@ import ScrollToTop from "react-router-scroll-top";
 //core components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Introduction from "./components/Introduction/Introduction";
+import Summary from "./components/Summary/Summary";
 import { routesHome } from "./routes";
 
 import setAuthToken from "./utils/setAuthToken";
@@ -34,6 +36,8 @@ function App() {
         <ScrollToTop>
           <Header />
           <Switch>{showMenuHome(routesHome)}</Switch>
+          <Introduction />
+          <Summary />
           <Footer />
         </ScrollToTop>
       </BrowserRouter>
