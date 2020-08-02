@@ -80,6 +80,9 @@ const withFormikHOC = withFormik({
     api
       .post(`users/login`, values)
       .then((res) => {
+        if (res.data.status === 400) {
+          return Promise.reject({ message: res.data.message });
+        }
         setSubmitting(false);
         setAuthToken(res.data.token);
         resetForm();
@@ -106,8 +109,9 @@ const withFormikHOC = withFormik({
       })
       .catch((err) => {
         setSubmitting(false);
-        setFieldError("email", err.response.data);
-        setFieldError("password", err.response.data);
+        err.message.includes("Email")
+          ? setFieldError("email", err.message)
+          : setFieldError("password", err.message);
       });
   },
 });
