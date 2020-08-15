@@ -27,11 +27,11 @@ class RegisterForm extends PureComponent {
       <ModalCustom
         title={
           <>
-            <h3 className="modal-title text-center">Register</h3>
+            <h3 className="modal-title text-center">Đăng ký</h3>
             <p className="text-center mb-0">
-              Do you have account?{" "}
+              Chưa có tài khoản?{" "}
               <span className="cursor-point text-primary" onClick={() => loginModal(true)}>
-                Login
+                Đăng nhập
               </span>
             </p>
           </>
@@ -44,20 +44,14 @@ class RegisterForm extends PureComponent {
           <form onSubmit={handleSubmit}>
             {formInput(touched.email, errors.email, "email", "Email", <MailOutlined />)}
 
-            {formInput(
-              touched.fullName,
-              errors.fullName,
-              "fullName",
-              "Full name",
-              <UserOutlined />
-            )}
+            {formInput(touched.fullName, errors.fullName, "fullName", "Tên", <UserOutlined />)}
             <div className="row">
               <div className="col-6">
                 {formInput(
                   touched.password,
                   errors.password,
                   "password",
-                  "Password",
+                  "Mật khẩu",
                   <LockOutlined />,
                   "password"
                 )}
@@ -67,7 +61,7 @@ class RegisterForm extends PureComponent {
                   touched.password2,
                   errors.password2,
                   "password2",
-                  "Verify password",
+                  "Nhập lại mật khẩu",
                   <LockOutlined />,
                   "password"
                 )}
@@ -79,7 +73,7 @@ class RegisterForm extends PureComponent {
                   touched.phoneNumber,
                   errors.phoneNumber,
                   "phoneNumber",
-                  "Phone number",
+                  "Số điện thoại",
                   <PhoneOutlined />
                 )}
               </div>
@@ -88,7 +82,7 @@ class RegisterForm extends PureComponent {
                   validateStatus={touched.dayOfBirth && errors.dayOfBirth && "error"}
                   help={touched.dayOfBirth && errors.dayOfBirth}
                 >
-                  <label className="mb-0">Date of birth</label>
+                  <label className="mb-0">Ngày sinh</label>
                   <DatePicker
                     format="DD/MM/YYYY"
                     size="large"
@@ -104,7 +98,7 @@ class RegisterForm extends PureComponent {
 
             <div className="input-group mt-3">
               <Button htmlType="submit" type="primary" size="large" block>
-                Register
+                Đăng ký
               </Button>
             </div>
           </form>
@@ -126,16 +120,14 @@ const withFormikHOC = withFormik({
     };
   },
   validationSchema: object().shape({
-    email: string().required("Email is required").email("Email is invalid"),
-    fullName: string().required("Full name is required"),
-    password: string()
-      .required("Password is required")
-      .min(3, "Password must have min 3 characters"),
+    email: string().required("Chưa nhập email").email("Email không đúng định dạng"),
+    fullName: string().required("Chưa nhập tên"),
+    password: string().required("Chưa nhập mật khẩu").min(3, "Mật khẩu phải có ít nhất 3 ký tự"),
     password2: string()
-      .required("Verify password is required")
-      .oneOf([ref("password"), null], "Passwords must match"),
-    phoneNumber: string().required("Phone number is required"),
-    dayOfBirth: string().required("Date of birth is required"),
+      .required("Chưa nhập lại mật khẩu")
+      .oneOf([ref("password"), null], "Mật khẩu nhập lại không khớp"),
+    phoneNumber: string().required("Chưa nhập số điện thoại"),
+    dayOfBirth: string().required("Chưa nhập ngày sinh"),
   }),
   handleSubmit: (values, { resetForm, props, setFieldError, setSubmitting }) => {
     api
@@ -144,7 +136,7 @@ const withFormikHOC = withFormik({
         console.log("thanhcong");
         setSubmitting(false);
         swal({
-          text: "Create new user successfully!",
+          text: "Tạo mới người dùng thành công!",
           icon: "success",
           buttons: false,
           timer: 1500,
@@ -157,7 +149,7 @@ const withFormikHOC = withFormik({
         console.log("errs");
         setSubmitting(false);
         swal({
-          text: "Some error has occurred!",
+          text: "Đã có lỗi xảy ra",
           icon: "error",
           buttons: false,
           timer: 1500,

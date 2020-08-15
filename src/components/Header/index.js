@@ -19,21 +19,21 @@ class Header extends PureComponent {
     super(props);
     this.state = {
       signInVisible: false,
-      registerVisible: false
+      registerVisible: false,
     };
   }
 
-  loginModal = value => {
+  loginModal = (value) => {
     this.setState({
       signInVisible: value,
-      registerVisible: false
+      registerVisible: false,
     });
   };
 
-  registerModal = value => {
+  registerModal = (value) => {
     this.setState({
       registerVisible: value,
-      signInVisible: false
+      signInVisible: false,
     });
   };
 
@@ -48,7 +48,7 @@ class Header extends PureComponent {
             style={{
               color: "#fff",
               borderBottom: "1px solid #fff",
-              paddingBottom: "8px"
+              paddingBottom: "8px",
             }}
             className="mb-0"
           >
@@ -56,20 +56,20 @@ class Header extends PureComponent {
           </p>
         </Menu.Item>
         <Menu.Item>
-          <Link to="/edit-profile">Edit profile</Link>
+          <Link to="/edit-profile">Chỉnh sửa thông tin</Link>
         </Menu.Item>
 
-        <Menu.Item>
+        {/* <Menu.Item>
           <Link to="/history-trips">History trips</Link>
-        </Menu.Item>
+        </Menu.Item> */}
 
         <Menu.Item>
-          <Link to="/my-profile">My profile</Link>
+          <Link to="/my-profile">Thông tin của tôi</Link>
         </Menu.Item>
 
         <Menu.Item>
           <Link to="/" onClick={() => this.props.authLogout()}>
-            Logout
+            Đăng xuất
           </Link>
         </Menu.Item>
       </Menu>
@@ -90,7 +90,7 @@ class Header extends PureComponent {
                       className="login-link text-dark cursor-point mb-0"
                       onClick={() => this.loginModal(true)}
                     >
-                      Login
+                      Đăng nhập
                     </p>
                     <LoginForm
                       registerModal={this.registerModal}
@@ -105,7 +105,7 @@ class Header extends PureComponent {
                       onClick={() => this.registerModal(true)}
                     >
                       <FaUserPlus className="mr-1" />
-                      Register
+                      Đăng ký
                     </button>
                     <RegisterForm
                       registerVisible={registerVisible}
@@ -135,17 +135,17 @@ class Header extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    auth: state.Authenticate
+    auth: state.Authenticate,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     authLogout: () => {
       dispatch(authLogout());
-    }
+    },
   };
 };
 

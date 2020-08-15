@@ -11,7 +11,7 @@ class Trips extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      limit: 2
+      limit: 2,
     };
   }
 
@@ -26,7 +26,7 @@ class Trips extends PureComponent {
     console.log("run loadMore");
     this.setState(
       {
-        limit: limit + 2
+        limit: limit + 2,
       },
       () => {
         this.props.getTripsLimit(this.state.limit);
@@ -42,7 +42,7 @@ class Trips extends PureComponent {
     // let isLoading = countTrips ? false : true;
     return (
       <Section>
-        <h2 className="text-center mb-5">Trip Booking</h2>
+        <h2 className="text-center mb-5">Chuyến xe phổ biến</h2>
         <Skeleton acitve loading={false}>
           <TripItem />
         </Skeleton>
@@ -50,7 +50,7 @@ class Trips extends PureComponent {
         {limit < count && (
           <div className="text-center mt-3">
             <Button onClick={this.loadMore} type="dashed" size="large">
-              Load more
+              Tải thêm
             </Button>
           </div>
         )}
@@ -60,23 +60,23 @@ class Trips extends PureComponent {
 }
 
 //countTrips la getAllTrip tu do tinh duoc length cua trip
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    countTrips: state.countTrips
+    countTrips: state.countTrips,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getStations: () => {
       dispatch(stationsAction.getStations());
     },
-    getTripsLimit: limit => {
+    getTripsLimit: (limit) => {
       dispatch(tripsActions.getTripsLimit(limit));
     },
     getAllTrips: () => {
       dispatch(tripsActions.getAllTrips());
-    }
+    },
   };
 };
 

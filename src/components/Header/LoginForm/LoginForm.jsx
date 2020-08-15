@@ -26,7 +26,7 @@ class LoginForm extends PureComponent {
 
     return (
       <ModalCustom
-        title={<h3 className="modal-title text-center">Login</h3>}
+        title={<h3 className="modal-title text-center">Đăng nhập</h3>}
         footer={[null, null]}
         visible={signInVisible}
         onCancel={() => loginModal(false)}
@@ -38,19 +38,19 @@ class LoginForm extends PureComponent {
               touched.password,
               errors.password,
               "password",
-              "Password",
+              "Mật khẩu",
               <LockOutlined />,
               "password"
             )}
             <div className="input-group text-center mb-3 justify-content-center">
-              Are you member?
+              Chưa có tài khoản?
               <span className="text-primary ml-1 cursor-point" onClick={() => registerModal(true)}>
-                Register
+                Đăng ký
               </span>
             </div>
             <div className="input-group">
               <Button htmlType="submit" type="primary" size="large" block>
-                Login
+                Đăng nhập
               </Button>
             </div>
           </form>
@@ -69,10 +69,8 @@ const withFormikHOC = withFormik({
   },
 
   validationSchema: object().shape({
-    email: string().required("Email is required").email("Email is invalid"),
-    password: string()
-      .required("Password is required")
-      .min(3, "Password must have min 3 characters"),
+    email: string().required("Chưa nhập email").email("Email không đúng định dạng"),
+    password: string().required("Chưa nhập mật khẩu").min(3, "Mật khẩu phải có ít nhất 3 ký tự"),
   }),
 
   handleSubmit: (values, { resetForm, setFieldValue, setFieldError, props, setSubmitting }) => {
@@ -103,8 +101,8 @@ const withFormikHOC = withFormik({
 
         Toast.fire({
           icon: "success",
-          title: "Signed in successfully",
-          footer: `Welcome ${jwtDecode(res.data.token).fullName}`,
+          title: "Đăng nhập thành công",
+          footer: `Chào mừng ${jwtDecode(res.data.token).fullName}`,
         });
       })
       .catch((err) => {

@@ -2,115 +2,144 @@
   padding: 0;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+}
 
 div.steps-content {
-  padding-top: 20px !important; }
+  padding-top: 20px !important;
+}
 
 .ant-select-selection-placeholder {
-  font-size: 19px; }
+  font-size: 19px;
+}
 
 .ant-select-selector {
-  height: 55px !important; }
+  height: 55px !important;
+}
 
 .ant-select-selection-search-input {
-  margin-top: 10px; }
+  margin-top: 10px;
+}
 
 .ant-select-selection-placeholder {
-  padding: 6px !important; }
+  padding: 6px !important;
+}
 
 .ant-picker-large {
-  padding: 11.7px 6.5px !important; }
+  padding: 11.7px 6.5px !important;
+}
 
 .ant-picker-large .ant-picker-input > input {
-  font-size: 19px !important; }
+  font-size: 19px !important;
+}
 
 .btn--search {
-  background-color: #f8ae00 !important; }
+  background-color: #f8ae00 !important;
+}
 
 .btn--search {
-  height: 55px !important; }
+  height: 55px !important;
+}
 
 .btn--search > span {
   font-size: 18px;
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .btn--search:hover,
 .btn--search:focus {
-  color: black !important; }
+  color: black !important;
+}
 
 .ant-timeline-item-content {
   display: flex;
-  width: 100%; }
+  width: 100%;
+}
 
 .booking-form {
-  width: 65%; }
+  width: 65%;
+}
 
 .seat__groups {
   text-align: left;
   position: absolute;
   left: 30%;
   top: 12%;
-  line-height: 3; }
-  .seat__groups .seat__note {
-    font-size: 16px;
-    font-weight: bold;
-    position: absolute;
-    left: -80%;
-    top: -20%; }
-  .seat__groups .seat__info {
-    margin: 20px 0px; }
-    .seat__groups .seat__info .seat__info--empty {
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      top: 11%;
-      left: -80%;
-      border: 1px solid red;
-      z-index: 3; }
-    .seat__groups .seat__info .seat__info--booked {
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      left: -80%;
-      background-color: #767676;
-      z-index: 3;
-      top: 41%; }
-    .seat__groups .seat__info .seat__info--select {
-      width: 40px;
-      height: 40px;
-      position: absolute;
-      left: -80%;
-      background-color: #5090e9;
-      z-index: 3;
-      top: 72%; }
+  line-height: 3;
+}
+.seat__groups .seat__note {
+  font-size: 16px;
+  font-weight: bold;
+  position: absolute;
+  left: -80%;
+  top: -20%;
+}
+.seat__groups .seat__info {
+  margin: 20px 0px;
+}
+.seat__groups .seat__info .seat__info--empty {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 11%;
+  left: -80%;
+  border: 1px solid red;
+  z-index: 3;
+}
+.seat__groups .seat__info .seat__info--booked {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: -80%;
+  background-color: #767676;
+  z-index: 3;
+  top: 41%;
+}
+.seat__groups .seat__info .seat__info--select {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: -80%;
+  background-color: #5090e9;
+  z-index: 3;
+  top: 72%;
+}
 
 .seat__select {
   background: #5090e9 !important;
-  border: none !important; }
+  border: none !important;
+}
 
 .seat__unSelect {
-  background: white; }
+  background: white;
+}
 
 .seat__selecting {
   display: flex;
   justify-content: center;
   font-weight: bold;
-  color: #981a1e; }
-  .seat__selecting .seat__selecting--item {
-    padding-right: 7px; }
+  color: #981a1e;
+}
+.seat__selecting .seat__selecting--item {
+  padding-right: 7px;
+}
 
 .trip .trip__item {
-  margin-left: 50px; }
-  .trip .trip__item .trip__item__from-to {
-    font-size: 18px;
-    flex-basis: 50%; }
-    .trip .trip__item .trip__item__from-to .trip__item--day {
-      margin-top: 5px;
-      font-size: 16px;
-      opacity: 0.8; }
-  .trip .trip__item .trip__item__price {
-    font-size: 20px;
-    flex-basis: 12%; }
-  .trip .trip__item .trip__item__btn {
-    flex-basis: 25%; }
+  margin-left: 50px;
+}
+.trip .trip__item .trip__item__from-to {
+  font-size: 18px;
+  flex-basis: 50%;
+}
+.trip .trip__item .trip__item__from-to .trip__item--day {
+  margin-top: 5px;
+  font-size: 16px;
+  opacity: 0.8;
+}
+.trip .trip__item .trip__item__price {
+  font-size: 20px;
+  flex-basis: 12%;
+}
+.trip .trip__item .trip__item__btn {
+  flex-basis: 25%;
+}

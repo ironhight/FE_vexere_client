@@ -1,13 +1,11 @@
 import api from "../../api";
-import swal from "sweetalert2";
+import swal from "sweetalert";
 import * as types from "../constants/actionTypes";
 
 export const getProfileAdmin = () => (dispatch) => {
   return api
     .get(`/users/me`)
     .then((res) => {
-      console.log("getProfileAdmin -> res", res);
-
       dispatch({
         type: types.GET_PROFILE_ADMIN,
         payload: res.data,
@@ -61,6 +59,7 @@ export const updateAvatar = (value, config, callbackThen) => (dispatch) => {
     .post(`users/me/avatar`, value, config)
     .then((res) => {
       dispatch({ type: types.UPDATE_AVATAR, payload: res.data });
+      console.log("success");
       swal({
         text: "Update successfully",
         icon: "success",
