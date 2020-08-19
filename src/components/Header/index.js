@@ -13,6 +13,7 @@ import LoginForm from "./LoginForm/LoginForm";
 import RegisterForm from "./RegisterForm/RegisterForm";
 
 import { authLogout } from "../../redux/actions/auth";
+import { getAvatar } from "../../redux/actions/users.action";
 
 class Header extends PureComponent {
   constructor(props) {
@@ -21,6 +22,11 @@ class Header extends PureComponent {
       signInVisible: false,
       registerVisible: false,
     };
+  }
+
+  componentDidMount() {
+    const { user } = this.props.auth;
+    this.props.getAvatar(user._id);
   }
 
   loginModal = (value) => {
@@ -39,7 +45,7 @@ class Header extends PureComponent {
 
   render() {
     const { signInVisible, registerVisible } = this.state;
-    const { auth } = this.props;
+    const { auth, user } = this.props;
 
     const menu = (
       <Menu theme="dark">
@@ -119,10 +125,7 @@ class Header extends PureComponent {
                   <NavItem>
                     <Dropdown overlay={menu}>
                       {/* <Avatar icon="user"  /> */}
-                      <Avatar
-                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                        className="cursor-point"
-                      />
+                      <Avatar src={user.avatar} className="cursor-point" />
                     </Dropdown>
                   </NavItem>
                 </>
@@ -138,6 +141,7 @@ class Header extends PureComponent {
 const mapStateToProps = (state) => {
   return {
     auth: state.Authenticate,
+    user: state.usersReducer,
   };
 };
 
@@ -145,6 +149,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     authLogout: () => {
       dispatch(authLogout());
+    },
+    getAvatar: (id) => {
+      dispatch(getAvatar(id));
     },
   };
 };

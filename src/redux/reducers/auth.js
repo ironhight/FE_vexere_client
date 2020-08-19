@@ -22,10 +22,7 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.AUTH_LOGIN:
       localStorage.setItem("Authorization", action.payload);
-      return {
-        user: jwtDecode(action.payload),
-        isAuthenticated: true,
-      };
+      return { ...state, user: jwtDecode(action.payload), isAuthenticated: true };
 
     case types.AUTH_LOGOUT:
       localStorage.removeItem("Authorization");
