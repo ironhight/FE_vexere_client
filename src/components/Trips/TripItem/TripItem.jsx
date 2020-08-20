@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 class TripItem extends Component {
   handleBooking = (isAuthenticated, id) => {
     if (!isAuthenticated) {
-      return Swal.fire("Warning!", "You have to login for booking trip", "warning");
+      return Swal.fire("Cảnh báo!", "Bạn phải đăng nhập để có thể đặt vé", "warning");
     } else {
       this.props.history.push(`/booking-trip/${id}`);
     }
@@ -50,7 +50,7 @@ class TripItem extends Component {
                       onClick={() => this.handleBooking(Authenticate.isAuthenticated, item._id)}
                       style={{ borderRadius: "5px" }}
                     >
-                      Book now
+                      Đặt vé
                     </Button>
                   </div>
                 </Timeline.Item>

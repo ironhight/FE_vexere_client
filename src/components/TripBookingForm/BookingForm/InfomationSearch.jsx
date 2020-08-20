@@ -30,7 +30,7 @@ class InfomationSearch extends Component {
 
   handleBooking = (isAuthenticated, id) => {
     if (!isAuthenticated) {
-      return Swal.fire("Warning!", "You have to login for booking trip", "warning");
+      return Swal.fire("Cảnh báo!", "Bạn phải đăng nhập để tiến hành đặt vé", "warning");
     } else {
       this.props.history.push(`/booking-trip/${id}`);
     }
@@ -59,20 +59,20 @@ class InfomationSearch extends Component {
               <Wrapper>
                 <h5 className="font-weight-normal d-flex align-items-center mb-4">
                   <FilterOutlined className="mr-1" />
-                  Search
+                  Tìm kiếm
                 </h5>
                 <form className="trip-booking__form">
                   <Row type={atHome && "flex"} align="bottom">
                     <Col className={atHome && "px-1"} md={atHome ? 6 : 24}>
                       <label className={atHome ? "font-weight-bold text-white mb-0" : ""}>
-                        From
+                        Nơi đến
                       </label>
                       <FormItem className={atHome ? "mb-0" : ""}>
                         <Select
                           name="locationFrom"
                           size="large"
                           showSearch
-                          placeholder="Select location"
+                          placeholder="Nơi đi"
                           optionFilterProp="children"
                           value={trips[0]?.fromStation?.province}
                           onChange={(value) => this.setFieldValue("locationFrom", value)}
@@ -91,7 +91,7 @@ class InfomationSearch extends Component {
                           size="large"
                           showSearch
                           value={trips[0]?.toStation?.province}
-                          placeholder="Select location"
+                          placeholder="Nơi đến"
                           optionFilterProp="children"
                           onChange={(value) => this.setFieldValue("locationTo", value)}
                           //   suffixIcon={<Icon type="environment" style={{ color: "#dc3545" }} />}
@@ -104,7 +104,7 @@ class InfomationSearch extends Component {
                     </Col>
                     <Col className={atHome && "px-1"} md={atHome ? 4 : 24}>
                       <label className={atHome ? "font-weight-bold text-white mb-0" : ""}>
-                        Date
+                        Ngày đi
                       </label>
                       <FormItem className={atHome ? "mb-0" : ""}>
                         <DatePickerCustom
@@ -128,12 +128,12 @@ class InfomationSearch extends Component {
                       {atHome ? (
                         <ButtonCustom type="primary" size="large" block htmlType="submit">
                           <CarOutlined />
-                          Search
+                          Tìm kiếm
                         </ButtonCustom>
                       ) : (
                         <ButtonCustom type="primary" size="large" block htmlType="submit">
                           <CarOutlined />
-                          Search
+                          Tìm Kiếm
                         </ButtonCustom>
                       )}
                     </Col>
@@ -145,7 +145,7 @@ class InfomationSearch extends Component {
               <Wrapper>
                 <h5 className="font-weight-normal d-flex align-items-center mb-4">
                   <CarOutlined className="mr-1" />
-                  Trips
+                  Chuyến đi
                 </h5>
                 <Timeline className="trip">
                   {!_.isEmpty(trips) && Array.isArray(trips)
@@ -183,7 +183,7 @@ class InfomationSearch extends Component {
                               }
                               style={{ borderRadius: "5px" }}
                             >
-                              Book now
+                              Đặt vé
                             </Button>
                           </div>
                         </Timeline.Item>

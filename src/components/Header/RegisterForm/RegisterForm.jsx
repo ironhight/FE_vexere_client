@@ -22,7 +22,7 @@ class RegisterForm extends PureComponent {
       setFieldValue,
       isSubmitting,
     } = this.props;
-
+    
     return (
       <ModalCustom
         title={
@@ -84,7 +84,7 @@ class RegisterForm extends PureComponent {
                 >
                   <label className="mb-0">Ngày sinh</label>
                   <DatePicker
-                    format="DD/MM/YYYY"
+                    format="YYYY-MM-DD"
                     size="large"
                     className="d-block"
                     name="dayOfBirth"

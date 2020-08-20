@@ -65,7 +65,7 @@ class BookingForm extends Component {
                 name="locationFrom"
                 size="large"
                 showSearch
-                placeholder="Select location"
+                placeholder="Nơi đi"
                 optionFilterProp="children"
                 onChange={this.handleChangeFrom}
                 suffixIcon={<EnvironmentOutlined style={{ color: "#28a745" }} />}
@@ -83,7 +83,7 @@ class BookingForm extends Component {
                 size="large"
                 showSearch
                 onChange={this.handleChangeTo}
-                placeholder="Select location"
+                placeholder="Nơi đến"
                 optionFilterProp="children"
                 suffixIcon={<EnvironmentOutlined style={{ color: "#dc3545" }} />}
               >
