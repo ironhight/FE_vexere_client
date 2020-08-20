@@ -211,7 +211,7 @@ class ContentStep1 extends Component {
 
                   <Price priceFont="25px" className="flex-grow-1">
                     {seatBook.length > 0
-                      ? `${trips.price * seatBook.length} 000`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                      ? `${trips.price * seatBook.length}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                       : 0}
 
                     <sup style={{ paddingLeft: "5px" }}>vnd</sup>
